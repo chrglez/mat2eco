@@ -1,0 +1,34 @@
+# Carpetas privadas - NO subir a GitHub público
+ejercicios/
+practicas/
+pruebas_examenes/
+old/
+
+# Archivos auxiliares de LaTeX
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+
+# Archivos temporales de R
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Carpetas de Claude Code
+.claude/
