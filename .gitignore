@@ -16,6 +16,23 @@ old/
 *.snm
 *.vrb
 
+# Archivos temporales de TikZ/PGFPlots
+tikz*.log
+tikz*.dat
+tikz*.script
+tikz*.table
+
+# Archivos generados por Quarto
+*_files/
+*.tex
+!**/partials/*.tex
+
+# Archivos temporales de gnuplot/contour (pgfplots)
+*_contourtmp*
+
+# Artefactos de Windows
+nul
+
 # Archivos temporales de R
 .Rproj.user
 .Rhistory

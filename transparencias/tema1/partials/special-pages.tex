@@ -1,0 +1,51 @@
+% College Beamer - Special Pages
+% This partial defines special page templates (Q&A, Bibliography)
+
+% --- Q&A page ---
+\newcommand{\QApage}{
+    \begingroup
+        \setbeamertemplate{footline}{}
+        \themecolor{colorbg}
+        
+        \begin{frame}{}
+            \centering
+            \begin{minipage}{\textwidth}
+                \usebeamercolor[fg]{normal text}
+                \centering
+                \Huge $$\mathcal Q \& \mathcal A$$
+                \Large \qaStr
+            \end{minipage}
+        \end{frame}
+    \endgroup
+}
+
+% --- Bibliography page ---
+\newcommand{\bibliographpage}{
+    \section{References}
+
+    \begingroup
+    \themecolor{colorbg}
+    \begin{frame}[allowframebreaks]{References}{\,}
+        \tiny
+        \printbibliography[heading=none]
+    \end{frame}
+    \endgroup
+}
+
+% --- Final page content ---
+% Use this inside a frame in the QMD: ## {.plain}\n\FinalPageContent
+% Uses TikZ overlay for background (Beamer's background canvas
+% does not work reliably in standalone frames outside hooks).
+% Title is taken from \insertsubtitle (YAML subtitle field).
+\newcommand{\FinalPageContent}{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[maincolor] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+    \centering
+    \vspace{3cm}
+    {\color{white}\LARGE\bfseries\insertsubtitle}
+
+    \vspace{2cm}
+
+    {\color{white}\Large \faCreativeCommons\ \faCreativeCommonsBy\ \faCreativeCommonsSa}
+}
