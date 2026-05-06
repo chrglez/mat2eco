@@ -1,0 +1,13 @@
+% Custom final page for Tema 4 (subtitle largo, color #d49c71)
+\renewcommand{\FinalPageContent}{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[maincolor] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+    \centering
+    \vspace{2.5cm}
+    {\color{white}\large\bfseries Tema 4: Introducción a la programación lineal}
+
+    \vspace{2cm}
+
+    {\color{white}\Large \faCreativeCommons\ \faCreativeCommonsBy\ \faCreativeCommonsSa}
+}

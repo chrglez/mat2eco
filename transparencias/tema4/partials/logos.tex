@@ -1,0 +1,22 @@
+% Logos propios de Tema 4 con nombres únicos
+\pgfdeclareimage[width=0.09\paperwidth]{t4colorlogo}{assets/color-logo.png}
+\pgfdeclareimage[width=0.09\paperwidth]{t4translogo}{assets/trans-logo.png}
+% Apuntar al logo color desde el inicio
+\makeatletter
+\renewcommand{\@makelogo}{t4colorlogo}
+% Redefinir themecolor usando \csname para evitar problemas con @
+\renewcommand{\themecolor}[1]{%
+  \ifstrequal{#1}{colorbg}{%
+    \setbeamercolor{background canvas}{bg=maincolor}%
+    \def\@makelogo{t4translogo}%
+    \setbeamercolor{normal text}{fg=white, bg=maincolor}%
+    \setbeamercolor{structure}{fg=white}%
+  }{%
+    \setbeamercolor{background canvas}{bg=white}%
+    \def\@makelogo{t4colorlogo}%
+    \setbeamercolor{normal text}{fg=darkgray, bg=white}%
+    \setbeamercolor{structure}{fg=maincolor}%
+  }%
+}
+\makeatother
+\themecolor{white}

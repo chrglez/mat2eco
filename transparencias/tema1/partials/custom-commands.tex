@@ -17,9 +17,9 @@
 % --- Text formatting commands ---
 \newcommand{\tbf}[1]{\texttt{\textcolor{airforceblue}{[#1]}}}
 
-% --- Colored textbf variants ---
-\newcommand{\ctextbf}[1]{\textbf{\textcolor{maincolor}{#1}}}
-\newcommand{\btextbf}[1]{\textbf{\textcolor{airforceblue}{#1}}}
+% --- Colored textbf variants (boldmath para que $fórmulas$ también salgan en negrita) ---
+\newcommand{\ctextbf}[1]{{\boldmath\textbf{\textcolor{maincolor}{#1}}}}
+\newcommand{\btextbf}[1]{{\boldmath\textbf{\textcolor{airforceblue}{#1}}}}
 
 % --- Colored textsl variants ---
 \newcommand{\ctextsl}[1]{\textsl{\textcolor{maincolor}{#1}}}
