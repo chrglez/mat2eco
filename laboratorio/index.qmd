@@ -9,3 +9,4 @@ Páginas para **explorar** las ideas del curso con un sistema de álgebra comput
 | Página | Tema | Qué se ve |
 |:--|:--:|:--|
 | [Curvas de nivel y gradiente](curvas-de-nivel-gradiente.qmd) | 1–2 | El gradiente es perpendicular a la curva de nivel y apunta hacia donde crece la función |
+| [Optimización con restricciones: Lagrange](lagrange.qmd) | 3 | El óptimo del consumidor, el multiplicador como precio sombra y la clasificación con el hessiano orlado |

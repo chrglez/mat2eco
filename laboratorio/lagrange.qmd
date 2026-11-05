@@ -1,0 +1,209 @@
+---
+title: "Optimización con restricciones: Lagrange"
+subtitle: "Tema 3 · el óptimo está donde la curva de nivel toca la restricción"
+---
+
+## Idea
+
+Queremos optimizar $f(x,y)$ sujeta a una restricción $g(x,y)=0$. En un óptimo, la curva de
+nivel de $f$ **es tangente** a la restricción. Dos curvas tangentes tienen la misma normal,
+así que los gradientes son paralelos:
+
+$$
+\nabla f=\lambda\,\nabla g .
+$$
+
+Eso, junto con $g=0$, es exactamente el sistema de Lagrange. Con el lagrangiano
+$\mathcal{L}=f-\lambda g$ se escribe $\nabla\mathcal{L}=0$.
+
+## Ejemplo económico: el consumidor
+
+Un consumidor maximiza su utilidad $U(x,y)=\sqrt{xy}$ con precios $p_x=2$, $p_y=1$ y renta $m$.
+Su restricción presupuestaria es $2x+y=m$.
+
+```{python}
+import numpy as np
+import sympy as sp
+import plotly.graph_objects as go
+from IPython.display import Math, display
+
+def mostrar(lhs, rhs):
+    """Escribe 'lhs = rhs' en LaTeX (rhs: expresión, matriz o lista de SymPy)."""
+    display(Math(lhs + " = " + sp.latex(rhs)))
+
+x, y, lam, m = sp.symbols("x y lambda m", positive=True)
+px, py = 2, 1
+
+U = sp.sqrt(x*y)                       # <- cambia aquí la utilidad
+g = px*x + py*y - m                    # restricción g = 0
+L = U - lam*g
+mostrar(r"\mathcal{L}", L)
+```
+
+### El sistema y su solución
+
+```{python}
+sistema = [sp.diff(L, v) for v in (x, y, lam)]
+for ec in sistema:
+    display(Math(sp.latex(ec) + " = 0"))
+
+sol = sp.solve(sistema, [x, y, lam], dict=True)[0]
+mostrar("x^*", sp.simplify(sol[x]))
+mostrar("y^*", sp.simplify(sol[y]))
+mostrar(r"\lambda^*", sp.simplify(sol[lam]))
+```
+
+El consumidor gasta **la mitad de su renta en cada bien**. Con $m=100$:
+
+```{python}
+sol100 = {k: v.subs(m, 100) for k, v in sol.items()}
+V = sp.simplify(U.subs(sol).subs(m, 100))
+mostrar(r"(x^*,y^*)", sp.Matrix([sol100[x], sol100[y]]).T)
+mostrar(r"U^*", V)
+```
+
+### El multiplicador es un precio sombra
+
+El valor máximo como función de la renta es $V(m)=U(x^*(m),y^*(m))$. El teorema de la envolvente
+dice que $V'(m)=\lambda^*$: **el multiplicador es la utilidad marginal de la renta**.
+Lo comprobamos:
+
+```{python}
+Vm = sp.simplify(U.subs(sol))
+mostrar("V(m)", Vm)
+mostrar("V'(m)", sp.simplify(sp.diff(Vm, m)))
+print("V'(m) - lambda* =", sp.simplify(sp.diff(Vm, m) - sol[lam]))
+```
+
+## Mueve la renta
+
+Con el deslizador cambia $m$. Verás el punto óptimo moverse por la línea presupuestaria, los
+gradientes de $U$ (rojo) y de la restricción (verde) **siempre paralelos**, y el valor del
+multiplicador en el título.
+
+```{python}
+U_n = sp.lambdify((x, y), U, "numpy")
+gradU = sp.lambdify((x, y), [sp.diff(U, x), sp.diff(U, y)], "numpy")
+x_opt = sp.lambdify(m, sol[x], "numpy")
+y_opt = sp.lambdify(m, sol[y], "numpy")
+lam_opt = sp.lambdify(m, sol[lam], "numpy")
+
+xx = np.linspace(0.5, 70, 300)
+
+def trazas(mv, k=40):
+    xo, yo, lo = float(x_opt(mv)), float(y_opt(mv)), float(lam_opt(mv))
+    u = float(U_n(xo, yo))
+    gx, gy = gradU(xo, yo)
+    return [
+        go.Scatter(x=[0, mv/px], y=[mv, 0], mode="lines",
+                   line=dict(color="seagreen", width=3), name="restricción 2x + y = m"),
+        go.Scatter(x=xx, y=u**2/xx, mode="lines",
+                   line=dict(color="royalblue", width=3), name="curva de nivel de U"),
+        go.Scatter(x=[xo, xo + k*gx], y=[yo, yo + k*gy], mode="lines",
+                   line=dict(color="crimson", width=4), name="∇U"),
+        go.Scatter(x=[xo, xo + k*px*lo], y=[yo, yo + k*py*lo], mode="lines",
+                   line=dict(color="darkgreen", width=2, dash="dot"), name="λ·∇g"),
+        go.Scatter(x=[xo], y=[yo], mode="markers",
+                   marker=dict(color="black", size=10), name="óptimo"),
+    ]
+
+def titulo(mv):
+    xo, yo, lo = float(x_opt(mv)), float(y_opt(mv)), float(lam_opt(mv))
+    return (f"m = {mv:.0f}   →   (x*, y*) = ({xo:.1f}, {yo:.1f})   "
+            f"U* = {float(U_n(xo, yo)):.2f}   λ* = {lo:.4f}")
+
+ms = np.arange(20, 121, 5)
+fig = go.Figure(
+    data=trazas(ms[0]),
+    frames=[go.Frame(data=trazas(mv), layout=dict(title_text=titulo(mv)), name=f"{mv}")
+            for mv in ms],
+)
+fig.update_layout(
+    height=560, margin=dict(l=10, r=10, t=60, b=10),
+    title=dict(text=titulo(ms[0]), font=dict(size=14)),
+    xaxis=dict(range=[0, 70], title="x", scaleanchor="y"),
+    yaxis=dict(range=[0, 130], title="y"),
+    legend=dict(orientation="h", y=-0.12),
+    sliders=[dict(active=0, currentvalue=dict(prefix="renta m = "),
+                  steps=[dict(method="animate", label=f"{mv}",
+                              args=[[f"{mv}"], dict(mode="immediate",
+                                                    frame=dict(duration=0, redraw=True))])
+                         for mv in ms])],
+)
+fig
+```
+
+Observa que $\lambda^*$ **no cambia** cuando sube la renta. Es una particularidad de las
+utilidades homogéneas de grado 1: aquí $V(m)$ es una recta, así que la utilidad marginal
+de la renta es constante.
+
+## Varios candidatos: círculo
+
+No siempre hay un único candidato. Optimicemos $f(x,y)=x+y$ sobre la circunferencia
+$x^2+y^2=2$.
+
+```{python}
+X, Y, Lm = sp.symbols("X Y Lm", real=True)
+f2 = X + Y
+g2 = X**2 + Y**2 - 2
+L2 = f2 - Lm*g2
+cand = sp.solve([sp.diff(L2, v) for v in (X, Y, Lm)], [X, Y, Lm], dict=True)
+for c in cand:
+    display(Math(rf"(x,y)=({sp.latex(c[X])},{sp.latex(c[Y])}),\quad "
+                 rf"\lambda={sp.latex(c[Lm])},\quad f={sp.latex(f2.subs(c))}"))
+```
+
+### Clasificación con el hessiano orlado
+
+Para dos variables y una restricción, el determinante del hessiano orlado
+
+$$
+\bar H=\begin{vmatrix}0 & g_x & g_y\\ g_x & \mathcal{L}_{xx} & \mathcal{L}_{xy}\\
+g_y & \mathcal{L}_{xy} & \mathcal{L}_{yy}\end{vmatrix}
+$$
+
+es **positivo en un máximo** y **negativo en un mínimo**.
+
+```{python}
+Hb = sp.Matrix([[0, sp.diff(g2, X), sp.diff(g2, Y)],
+                [sp.diff(g2, X), sp.diff(L2, X, 2), sp.diff(L2, X, Y)],
+                [sp.diff(g2, Y), sp.diff(L2, X, Y), sp.diff(L2, Y, 2)]])
+for c in cand:
+    d = sp.simplify(Hb.det().subs(c))
+    tipo = "máximo" if d > 0 else "mínimo"
+    display(Math(rf"({sp.latex(c[X])},{sp.latex(c[Y])}):\ |\bar H|={sp.latex(d)}"
+                 rf"\ \Rightarrow\ \text{{{tipo}}}"))
+```
+
+```{python}
+t = np.linspace(0, 2*np.pi, 400)
+r = np.sqrt(2)
+gx_, gy_ = np.meshgrid(np.linspace(-2.2, 2.2, 200), np.linspace(-2.2, 2.2, 200))
+fig2 = go.Figure()
+fig2.add_trace(go.Contour(x=np.linspace(-2.2, 2.2, 200), y=np.linspace(-2.2, 2.2, 200),
+                          z=gx_ + gy_, ncontours=14, colorscale="Greys", showscale=False,
+                          line=dict(width=1), hoverinfo="skip", name="curvas de nivel de f"))
+fig2.add_trace(go.Scatter(x=r*np.cos(t), y=r*np.sin(t), mode="lines",
+                          line=dict(color="seagreen", width=4), name="x² + y² = 2"))
+pts = [(float(c[X]), float(c[Y])) for c in cand]
+fig2.add_trace(go.Scatter(x=[p[0] for p in pts], y=[p[1] for p in pts], mode="markers+text",
+                          marker=dict(color="crimson", size=12),
+                          text=[f"f = {p[0]+p[1]:.0f}" for p in pts],
+                          textposition="top right", name="candidatos"))
+fig2.update_layout(height=520, margin=dict(l=10, r=10, t=10, b=10),
+                   xaxis=dict(scaleanchor="y", title="x"), yaxis=dict(title="y"),
+                   legend=dict(orientation="h", y=-0.12))
+fig2
+```
+
+En cada candidato, la recta $x+y=c$ **roza** la circunferencia sin cortarla: son las dos
+rectas tangentes.
+
+## Ejercicios
+
+1. Cambia los precios a $p_x=1$, $p_y=4$. ¿Cuánto gasta ahora en cada bien? ¿Cambia la
+   proporción de gasto?
+2. Cambia la utilidad por $U=x^{0.3}y^{0.7}$ (ya sin la raíz). ¿Qué fracción de la renta
+   se gasta en $x$? ¿Sigue $\lambda^*$ siendo constante en $m$?
+3. Minimiza $x^2+y^2$ sujeto a $x+y=2$. Comprueba con SymPy que $\lambda$ coincide con
+   $\mathrm{d}V/\mathrm{d}(\text{renta})$ al tomar $x+y=k$.
