@@ -6,6 +6,7 @@ project:
     - index.qmd
     - temas.qmd
     - laboratorio/*.qmd
+    - transparencias/tema2/web/tema2.qmd
   resources:
     - transparencias/tema1/Trans_tema1.pdf
     - transparencias/tema2/Trans_tema2.pdf

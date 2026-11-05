@@ -7,8 +7,10 @@ toc: false
 |:--:|:--|:--:|
 | 0 | Presentación de la asignatura | [PDF](mat2eco_presentacion/presentacion_asignatura.pdf) · [Guía docente 25/26](mat2eco_presentacion/guiadocentemat2eco2526.pdf) |
 | 1 | Funciones de varias variables: dominio, curvas de nivel, límites y continuidad | [PDF](transparencias/tema1/Trans_tema1.pdf) |
-| 2 | Cálculo diferencial de funciones de varias variables | [PDF](transparencias/tema2/Trans_tema2.pdf) |
+| 2 | Cálculo diferencial de funciones de varias variables | [Presentación (HTML)](transparencias/tema2/web/tema2.html) · [PDF](transparencias/tema2/Trans_tema2.pdf) |
 | 3 | Introducción a la optimización de funciones de varias variables | [PDF](transparencias/tema3/Trans_tema3.pdf) |
 | 4 | Introducción a la programación lineal | [PDF](transparencias/tema4/Trans_tema4.pdf) |
+
+En la presentación HTML: **←/→** para avanzar, **S** para el modo orador, **F** para pantalla completa, **O** para la vista general y **?** para todas las teclas.
 
 Las fuentes (Quarto) están en el [repositorio](https://github.com/chrglez/mat2eco).

@@ -1590,6 +1590,7 @@ En economía, las funciones de producción homogéneas se clasifican por sus **r
 Si $f$ es homogénea de grado $k$ y diferenciable, entonces:
 
 **Para 2 variables:**
+
 ::: {.block}
 $$
 x \frac{\partial f}{\partial x} + y \frac{\partial f}{\partial y} = k f(x, y)

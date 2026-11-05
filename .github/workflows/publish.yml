@@ -8,6 +8,8 @@ on:
       - "*.qmd"
       - "styles.scss"
       - "laboratorio/**"
+      - "transparencias/tema2/web/**"
+      - "transparencias/tema2/img-png/**"
       - "requirements.txt"
       - "transparencias/**/*.pdf"
       - "mat2eco_presentacion/*.pdf"
