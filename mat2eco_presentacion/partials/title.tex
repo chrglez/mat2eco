@@ -1,0 +1,18 @@
+$if(title)$
+\title$if(shorttitle)$[$shorttitle$]$endif${~\texorpdfstring{$title$}{$title-meta$}}
+$endif$
+
+$if(subtitle)$
+\subtitle$if(shortsubtitle)$[$shortsubtitle$]$endif${~\texorpdfstring{$subtitle$}{$subtitle-meta$}}
+$endif$
+
+% No olvides el mapeo del curso que hicimos antes
+$if(curso)$
+\newcommand{\curso}{$curso$}
+$endif$
+
+\author$if(shortauthor)$[$shortauthor$]$endif${$for(authors)$$it.name.literal$$sep$ \and $endfor$}
+\date{$date$}
+\institute{$institute$}
+
+

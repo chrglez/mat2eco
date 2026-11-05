@@ -1,0 +1,33 @@
+% College Beamer - Special Pages
+% This partial defines special page templates (Q&A, Bibliography)
+
+% --- Q&A page ---
+\newcommand{\QApage}{
+    \begingroup
+        \setbeamertemplate{footline}{}
+        \themecolor{colorbg}
+        
+        \begin{frame}{}
+            \centering
+            \begin{minipage}{\textwidth}
+                \usebeamercolor[fg]{normal text}
+                \centering
+                \Huge $$\mathcal Q \& \mathcal A$$
+                \Large \qaStr
+            \end{minipage}
+        \end{frame}
+    \endgroup
+}
+
+% --- Bibliography page ---
+\newcommand{\bibliographpage}{
+    \section{References}
+
+    \begingroup
+    \themecolor{colorbg}
+    \begin{frame}[allowframebreaks]{References}{\,}
+        \tiny
+        \printbibliography[heading=none]
+    \end{frame}
+    \endgroup
+}

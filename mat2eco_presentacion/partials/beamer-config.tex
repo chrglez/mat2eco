@@ -1,0 +1,162 @@
+% College Beamer - Beamer Configuration
+% This partial configures Beamer colors, fonts, and templates
+
+% --- Beamer color configuration ---
+\setbeamercolor{title}{fg=maincolor}
+\setbeamercolor{alerted text}{fg=maincolor}
+\setbeamercolor{author}{fg=black}
+\setbeamercolor{date}{fg=black}
+
+% --- Font configuration ---
+%\usefonttheme{serif}
+
+% Default: use small caps for title (English style)
+% Override with header-includes if needed for other languages
+\setbeamerfont{title}{series=\scshape, size=\Large}
+
+\setbeamerfont{subtitle}{series=\mdseries, size=\normalsize}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{date}{size=\normalsize}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{framesubtitle}{series=\mdseries}
+\setbeamerfont{footline}{size=\scriptsize}
+
+% --- Navigation symbols ---
+\setbeamertemplate{navigation symbols}{}
+
+% --- Headline template (logo) ---
+\makeatletter
+\setbeamertemplate{headline}{\hspace{0.06\textwidth}\pgfuseimage{\@makelogo}}
+\makeatother
+
+% --- Footline template ---
+\makeatletter
+\newcommand{\@footlinepayoff}{}
+\setbeamertemplate{footline}{
+	\begin{beamercolorbox}[wd=\textwidth, ht=5mm, dp=3mm, rightskip=1cm]{footline}
+		\usebeamerfont{footline}\hfill\@footlinepayoff
+	\end{beamercolorbox}
+}
+
+\newcommand{\footlinecolor}[1]{
+	\ifstrempty{#1}{
+		\renewcommand{\@footlinepayoff}{}
+		\setbeamercolor{footline}{bg=}
+	}{
+		% Footer text can be set via \renewcommand{\@footlinepayoff}{Your text}
+		\setbeamercolor{footline}{fg=white, bg=#1}
+	}
+}
+\makeatother
+\footlinecolor{} % default: no footline
+
+% --- Block template ---
+\setbeamertemplate{blocks}[rounded]
+\setbeamerfont{block title}{series=\centering, size=\small}
+\setbeamerfont{block body}{size=\scriptsize}
+\setbeamercolor{block title}{fg=airforceblue, bg=morelightgray}
+\setbeamercolor{block body}{fg=darkgray, bg=morelightgray}
+
+% --- Itemize bullets ---
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{\textemdash}
+\setbeamertemplate{itemize subsubitem}{\ensuremath{\circ}}
+
+% --- Table of contents ---
+\setbeamertemplate{section in toc}{$\blacktriangleright$~\inserttocsection}
+\setbeamertemplate{subsection in toc}{}
+
+% --- Code block styling ---
+\lstdefinestyle{mystyle}{
+	commentstyle=\color{airforceblue},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\scriptsize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=4,
+	xleftmargin=10pt,
+	xrightmargin=10pt,
+}
+\lstset{style=mystyle}
+
+% --- Frame title template ---
+\setbeamertemplate{frametitle}{
+	\vspace*{-3.5ex}
+	\begin{beamercolorbox}[leftskip=2cm]{frametitle}
+		\usebeamerfont{frametitle}\insertframetitle\\
+		\usebeamerfont{framesubtitle}\insertframesubtitle
+	\end{beamercolorbox}
+}
+
+% --- Frame subtitle automation ---
+\makeatletter
+\pretocmd\beamer@checkframetitle{\framesubtitle{\thesection \, \secname}}
+\makeatother
+
+% --- Avoid numbering of frames broken into slides ---
+\setbeamertemplate{frametitle continuation}{}
+
+% --- Section page with current section highlighted ---
+\AtBeginSection[]
+{
+	\begingroup
+	\setbeamertemplate{footline}{}
+	\themecolor{colorbg}
+	\begin{frame}{\contentsname\,}
+		\tableofcontents[currentsection]
+	\end{frame}
+	\endgroup
+}
+
+% --- Subsection title page ---
+\AtBeginSubsection[]
+{
+	\begin{frame}{\,}{\thesection \, \secname}
+		\fontfamily{ptm}\selectfont
+		\centering\textsl{\textbf{\textcolor{maincolor}{
+					\large Section \thesection.\thesubsection
+					\vskip15pt
+					\LARGE \subsecname
+				}}}
+	\end{frame}
+}
+
+% --- title page layout ---
+\setbeamertemplate{title page}{
+	% 1. Fondo TikZ (Sigue igual)
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[at=(current page.center)] {
+			\includegraphics[width=\paperwidth, height=\paperheight]{\backgroundPath}
+		};
+	\end{tikzpicture}
+
+	% 2. Caja de texto corregida
+	\hspace{-12mm}
+	\begin{beamercolorbox}[wd=0.9\textwidth, sep=10pt, leftskip=8mm]{title}
+		{\usebeamerfont{title}\inserttitle}
+
+		% Usamos vskip en lugar de \\ para evitar el error de "no line here to end"
+		\ifx\insertsubtitle\@empty\else
+			\vskip5pt {\usebeamerfont{subtitle}\insertsubtitle}
+		\fi
+
+		\vskip15pt
+		{\usebeamerfont{author}\usebeamercolor[fg]{author}\hspace{2mm}\insertauthor}
+
+		\vskip5pt
+		{\usebeamerfont{date}\usebeamercolor[fg]{date}\hspace{1mm}
+			\ifdef{\curso}{\curso}{\insertdate}}
+	\end{beamercolorbox}
+}
+\newcommand{\secondary}[1]{\btextbf{#1}}
+
+\newcommand{\primary}[1]{\ctextbf{#1}}

@@ -1,0 +1,39 @@
+% College Beamer - Custom Commands
+% This partial defines useful custom commands
+
+% --- Colored hyperlinks ---
+\newcommand{\bhref}[2]{\textcolor{airforceblue}{\href{#1}{#2}}}
+
+% --- Centering paragraph statement ---
+\newcommand{\centerstate}[1]{
+    \centering
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            #1
+        \end{column}
+    \end{columns}
+}
+
+% --- Text formatting commands ---
+\newcommand{\tbf}[1]{\texttt{\textcolor{airforceblue}{[#1]}}}
+
+% --- Colored textbf variants ---
+\newcommand{\ctextbf}[1]{\textbf{\textcolor{maincolor}{#1}}}
+\newcommand{\btextbf}[1]{\textbf{\textcolor{airforceblue}{#1}}}
+
+% --- Colored textsl variants ---
+\newcommand{\ctextsl}[1]{\textsl{\textcolor{maincolor}{#1}}}
+\newcommand{\btextsl}[1]{\textsl{\textcolor{airforceblue}{#1}}}
+
+% --- Colored emph variants ---
+\newcommand{\cemph}[1]{\emph{\textcolor{maincolor}{#1}}}
+\newcommand{\bemph}[1]{\emph{\textcolor{airforceblue}{#1}}}
+
+% --- Colored texttt variants ---
+\newcommand{\ctexttt}[1]{\texttt{\textcolor{maincolor}{#1}}}
+\newcommand{\btexttt}[1]{\texttt{\textcolor{airforceblue}{#1}}}
+
+% --- Bibliography URL formatting ---
+% Display "Disponible en biblioteca" instead of full URL
+\DeclareFieldFormat{url}{\href{#1}{\textit{Disponible en biblioteca}}}
+\DeclareFieldFormat{urldate}{}  % Hide URL access date

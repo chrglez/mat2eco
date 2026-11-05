@@ -1,0 +1,454 @@
+---
+title: "Matemáticas para la Economía II"
+subtitle: "Presentación de la Asignatura"
+author: "Christian González Martel"
+institute: "Universidad de Las Palmas de Gran Canaria"
+curso: "Curso 25/26"
+license: "CC BY-NC-SA"
+copyright:
+  holder: "Christian González Martel"
+  year: 2025
+bibliography: mybib.bib
+biblio-style: authoryear
+biblatexoptions: [backend=biber, style=authoryear, url=true, doi=false]
+link-citations: true
+nocite: '@*'
+format:
+  beamer:
+    cite-method: biblatex
+    filters:
+        - filters/format-span.lua
+    listings: true
+    aspectratio: 169
+    lang: es
+    keep-tex: true
+    include-in-header:
+      - partials/packages.tex
+      - partials/theme-config.tex
+      - partials/beamer-config.tex
+      - partials/custom-commands.tex
+      - partials/special-pages.tex
+    template-partials:
+      - partials/title.tex
+---
+
+# Información de la Asignatura {.unnumbered}
+
+## Datos Generales
+
+::: {.columns}
+
+::: {.column width="60%"}
+**Asignatura**
+
+- **Código:** 40706
+- **Nombre:** Matemáticas para la Economía II
+- **Tipo:** Básica
+- **Código UNESCO:** 1202.10
+
+**Titulación**
+
+- **Grado en Economía**
+- **Centro:** Facultad de Economía, Empresa y Turismo
+:::
+
+::: {.column width="40%"}
+**Carga Académica**
+
+- **Créditos ECTS:** 6
+- **Curso:** 1º
+- **Semestre:** 2º semestre
+
+**Idioma**
+
+- **Español:** 6 ECTS
+- **Inglés:** 0 ECTS
+:::
+
+:::
+
+## Profesorado | Coordinador
+
+::: {.columns}
+
+::: {.column width="50%"}
+\ctextbf{Dr. Christian González Martel}
+
+**Coordinador de la asignatura**
+
+- **Departamento:** Métodos Cuantitativos en Economía y Gestión
+- **Área:** Métodos Cuantitativos para la Economía y la Empresa
+- **Despacho:** D-4.07
+- **Teléfono:** 928458220
+- **Email:** christian.gonzalez@ulpgc.es
+:::
+
+::: {.column width="50%"}
+**Horario de Tutorías**
+
+- Lunes: 8:30 - 12:30 (4 horas)
+- Jueves: 9:30 - 11:30 (2 horas)
+
+::: {.block}
+### Cita Previa
+Se recomienda solicitar cita previa a través del Aula Virtual
+:::
+:::
+
+:::
+
+## Profesorado | Responsable de Prácticas
+
+::: {.columns}
+
+::: {.column width="50%"}
+\ctextbf{Dra. Dolores Rosa Santos Peñate}
+
+**Responsable de Prácticas**
+
+- **Departamento:** Métodos Cuantitativos en Economía y Gestión
+- **Área:** Métodos Cuantitativos para la Economía y la Empresa
+- **Teléfono:** 928451805
+- **Email:** dr.santos@ulpgc.es
+:::
+
+::: {.column width="50%"}
+::: {.block}
+### Coordinación
+El equipo docente trabajará de forma coordinada para garantizar la coherencia entre teoría y práctica
+:::
+:::
+
+:::
+
+# Requisitos Previos {.unnumbered}
+
+## Conocimientos Recomendados
+
+Se recomienda que el alumno tenga destreza en el manejo de las herramientas básicas de:
+
+- **Aritmética, cálculo y álgebra lineal**
+- **Resolución de ecuaciones** y su interpretación geométrica
+- **Representación** de rectas y parábolas
+- **Funciones elementales:** gráficas, continuidad, derivabilidad
+- **Matrices y determinantes:** nociones elementales
+
+::: {.block}
+### Matemáticas para la Economía I
+Resulta recomendable haber superado la asignatura de **Matemáticas para la Economía I**
+:::
+
+## Capacidades Necesarias
+
+El alumno deberá tener desarrollada:
+
+- **Capacidad de abstracción** que permita la comprensión de los contenidos de la asignatura
+- **Capacidad de traslado** de conceptos matemáticos a aplicaciones en Economía
+- **Habilidad para operar** sin dificultad con las herramientas matemáticas básicas
+
+# Contribución de la Asignatura {.unnumbered}
+
+## Importancia en el Grado
+
+- Se trata de una asignatura de **conocimientos instrumentales** dirigida a servir de soporte principal a otras asignaturas cuantitativas del grado:
+  - Estadística
+  - Econometría
+  - Otras matemáticas
+
+- Persigue servir de **herramienta** al resto de las asignaturas que requieran técnicas cuantitativas para su desarrollo
+
+## Formación Profesional
+
+Esta asignatura pretende dar una **formación básica y general** que permita:
+
+- Acceder en las mejores condiciones posibles a cualquiera de las diversas **salidas profesionales** para las que capacitan los estudios de Economía
+
+- Reforzar de manera significativa los **perfiles de empleabilidad** más habituales para este tipo de estudios en nuestro entorno
+
+# Objetivos de la Asignatura {.unnumbered}
+
+## Objetivos (I)
+
+1. Tener **capacidad de razonamiento y abstracción**
+
+2. **Identificar el modelo matemático** al que se ajustan los problemas propuestos y plantearlos
+
+3. **Resolver los problemas** utilizando diferentes herramientas informáticas en caso necesario
+
+4. Poder **exponer y comunicar** las soluciones a los problemas tanto de forma oral como escrita
+
+5. **Tomar decisiones** a partir del análisis de las soluciones obtenidas para los problemas propuestos
+
+## Objetivos (II)
+
+6. Comprender los **conceptos básicos** de la teoría de funciones en varias variables: continuidad, derivabilidad e integración en una y varias variables y su relación con la teoría económica
+
+7. Comprender los conceptos básicos de la **programación matemática** sin restricciones y con restricciones de igualdad
+
+8. **Obtener las cantidades de interés** en los problemas propuestos y su análisis posterior
+
+## Objetivos (III)
+
+9. Comprender la **interpretación de los multiplicadores de Lagrange**
+
+10. Interpretar correctamente los **multiplicadores de Lagrange** y las **variables duales** en programación lineal y aplicar dicha interpretación para establecer conclusiones en problemas del ámbito económico-empresarial
+
+# Competencias Específicas {.unnumbered}
+
+## Competencias de la Asignatura
+
+**CEA3.** Afianzar el uso del **lenguaje simbólico** destacando sus ventajas a la hora de realizar una representación clara y concisa de la información así como en la presentación de resultados
+
+**CEA4.** Definir un **marco conceptual** para la formalización y desarrollo de procedimientos teóricos de ayuda a la toma de decisiones
+
+## Competencias de la Asignatura
+
+**CEA6.** Proporcionar al estudiante los **instrumentos básicos** del cálculo en varias variables y la optimización para el análisis cuantitativo de la actividad económico-empresarial
+
+**CEA7.** Adquirir cierta **destreza matemática** en la aplicación de los instrumentos en CEA6 en problemas simplificados de la realidad económica
+
+**CEA25.** Afianzar el uso del **lenguaje informático**
+
+# Contenidos de la Asignatura {.unnumbered}
+
+## Contenidos Teóricos, Prácticos y de Laboratorio
+
+La asignatura aborda:
+
+- **Cálculo en varias variables**
+- **Integración de funciones reales**
+- **Introducción a la programación matemática:**
+  - Programación sin restricciones
+  - Programación con restricciones de igualdad
+- **Introducción a la programación lineal**
+
+Estos contenidos se desarrollan en **4 temas**
+
+## Tema 1 | Funciones reales de varias variables
+
+**1.1.** Funciones de varias variables
+
+**1.2.** Dominio y curvas de nivel
+
+**1.3.** Límites y continuidad de funciones de varias variables
+
+## Tema 2 | Cálculo de funciones reales de varias variables (I)
+
+**2.1.** Cálculo de derivadas parciales
+
+**2.2.** La diferencial total
+
+**2.3.** El vector gradiente
+
+**2.4.** Regla de la cadena para derivadas parciales
+
+**2.5.** Derivación implícita de ecuaciones
+
+## Tema 2 | Cálculo de funciones reales de varias variables (II)
+
+**2.6.** Cálculo de derivadas parciales de orden superior. Teorema de Schwarz
+
+**2.7.** La matriz hessiana
+
+**2.8.** Aproximación de funciones de varias variables. Fórmula de Taylor
+
+**2.9.** Funciones homogéneas
+
+**2.10.** Introducción a la integración múltiple. Integral doble
+
+## Tema 3 | Introducción a la optimización (I)
+
+**3.1.** Planteamiento de un problema de optimización
+
+**3.2.** Optimización sin restricciones
+
+- 3.2.1. Condición de primer orden
+- 3.2.2. Condición de segundo orden
+
+## Tema 3 | Introducción a la optimización (II)
+
+**3.3.** Optimización con restricciones de igualdad
+
+- 3.3.1. Aspectos geométricos
+- 3.3.2. Método de los multiplicadores de Lagrange
+- 3.3.3. Interpretación de los multiplicadores de Lagrange
+
+**3.4.** Resultados fundamentales
+
+## Tema 4 | Introducción a la programación lineal
+
+**4.1.** Conceptos previos: sistemas de inecuaciones lineales
+
+**4.2.** Planteamiento de un problema de programación lineal (PPL)
+
+- 4.2.1. Formulación general de un PPL
+- 4.2.2. Formas estándar y canónica de un PPL
+
+**4.3.** Resolución gráfica y resultados básicos
+
+**4.4.** Dualidad
+
+- 4.4.1. Deducción del precio sombra
+- 4.4.2. Formulación matemática del problema dual
+- 4.4.3. Relaciones primal-dual
+
+# Planificación Académica {.unnumbered}
+
+## Distribución de Horas
+
+::: {.columns}
+
+::: {.column width="50%"}
+**Actividades Presenciales**
+
+- **Horas teóricas presenciales:** 45h
+- **Horas prácticas presenciales:** 15h
+- **Horas trabajo tutorizado:** 15h
+:::
+
+::: {.column width="50%"}
+**Actividades No Presenciales**
+
+- **Horas trabajo autónomo:** 75h
+
+::: {.block}
+### Total
+**150 horas** (6 ECTS)
+:::
+:::
+
+:::
+
+## Organización Semanal
+
+La asignatura se desarrolla a lo largo de **15 semanas** con la siguiente estructura:
+
+- **Semana 1-3:** Tema 1
+- **Semana 4-7:** Tema 2
+- **Semana 8-11:** Tema 3
+- **Semana 12-15:** Tema 4
+
+Cada semana incluye:
+
+- 3 horas de teoría presencial
+- 1 hora de práctica presencial
+- 1 hora de trabajo tutorizado
+- 5 horas de trabajo autónomo
+
+## Recursos Docentes
+
+**Aula A-2.1**
+
+- 3 horas semanales de **teoría y ejemplos**
+  - Guiones de clase
+  - Explicación de conceptos teóricos
+
+- 1 hora semanal de **prácticas (ejercicios)**
+  - Resolución de problemas
+  - Relaciones de ejercicios
+
+## Aula Virtual
+
+El **Aula Virtual** es el canal principal de comunicación y contiene:
+
+- Novedades y anuncios
+- Foro de dudas
+- Planificación detallada
+- Cita previa para tutorías
+- Materiales docentes
+- Actividades de evaluación continua
+
+# Sistema de Evaluación {.unnumbered}
+
+## Convocatoria Ordinaria
+
+::: {.columns}
+
+::: {.column width="50%"}
+**Evaluación Continua (30%)**
+
+- Primera prueba: \textbf{20 puntos}
+  - Fecha: **20 de abril**
+- Segunda prueba: \textbf{10 puntos}
+  - Fecha: **21 de mayo**
+:::
+
+::: {.column width="50%"}
+**Examen Final (70%)**
+
+- Examen final: \textbf{70 puntos}
+  - Todo el temario
+:::
+
+:::
+
+::: {.block}
+### Calificación Mínima
+Para superar la asignatura se debe obtener **50 puntos sobre 100**
+:::
+
+## Convocatorias Extraordinaria y Especial
+
+En las convocatorias **extraordinaria** y **especial**:
+
+- El sistema de evaluación se basará **únicamente en un examen final**
+- El examen supondrá el **100% de la calificación**
+- Permite acreditar todas las competencias recogidas en la guía docente
+
+::: {.block}
+### No Presentado
+Se asignará "No presentado" únicamente a aquellos estudiantes que no se presenten al examen final en ninguna de las convocatorias oficiales
+:::
+
+## Participación Adicional
+
+A la nota final de la convocatoria ordinaria, y siempre que se haya alcanzado la calificación mínima para superar la asignatura (≥ 50 puntos), podrá añadirse:
+
+::: {.block}
+### Bonus por Participación
+Hasta **1 punto adicional** por la participación del alumnado en charlas o conferencias organizadas por el Centro y relacionadas con la materia impartida, siempre que hayan sido recomendadas por el equipo docente
+:::
+
+# Aspectos Transversales {.unnumbered}
+
+## Inteligencia Artificial Generativa
+
+En esta asignatura se utilizarán **herramientas de Inteligencia Artificial Generativa (IAGen)** para:
+
+- Elaboración del material docente
+- Evaluación del estudiantado (en actividades específicas)
+
+**Compromiso del profesorado:**
+
+- Informar claramente sobre el uso de estas herramientas
+- Explicar su impacto en la evaluación
+- Indicar qué herramientas se han utilizado
+
+**Compromiso del estudiantado:**
+
+- Aprender a utilizar estas herramientas de manera **responsable y ética**
+- Indicar claramente qué herramientas han utilizado en trabajos y actividades
+
+## Objetivos de Desarrollo Sostenible
+
+Esta asignatura se adhiere a las directrices sobre **sostenibilidad curricular** emitidas por la CRUE y la ULPGC a través de la **Agenda 2030**.
+
+::: {.columns}
+
+::: {.column width="50%"}
+**ODS Relacionados**
+
+- **ODS 4:** Educación de Calidad
+- **ODS 8:** Trabajo Decente y Crecimiento Económico
+- **ODS 9:** Industria, Innovación e Infraestructura
+- **ODS 12:** Producción y Consumo Responsables
+:::
+
+::: {.column width="50%"}
+**Compromiso**
+
+Las competencias, contenidos, metodología y evaluación integrarán referencias a estos ODS en todo lo posible
+:::
+
+:::
+

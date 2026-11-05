@@ -1,0 +1,57 @@
+% College Beamer - Theme Configuration
+% This partial defines colors, paths, and basic theme settings
+
+% --- Language strings (defaults, override from YAML) ---
+%\newcommand{\tocStr}{Table of Contents}
+%\newcommand{\qaStr}{\textsl{Thank you for listening! \\ Your feedback will be highly appreciated!}}
+
+% --- College/University theme selection ---
+% Default values (override these from YAML header-includes)
+\newcommand{\maincolorRGB}{128, 57, 61}
+\newcommand{\colorlogoPath}{assets/color-logo.png}
+\newcommand{\translogoPath}{assets/trans-logo.png}
+\newcommand{\backgroundPath}{assets/background.png}
+
+% --- Force 16:9 aspect ratio ---
+% \geometry{paperwidth=16cm,paperheight=9cm}
+% Deshabilitado para usar el aspectratio de beamer
+
+% --- Logo declarations ---
+\pgfdeclareimage[width=0.09\paperwidth]{colorlogo}{\colorlogoPath}
+\pgfdeclareimage[width=0.09\paperwidth]{translogo}{\translogoPath}
+
+\makeatletter
+\newcommand{\@makelogo}{colorlogo}
+\makeatother
+
+% --- Color definitions ---
+\definecolor{maincolor}{RGB}{\maincolorRGB}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+\definecolor{morelightgray}{rgb}{0.9, 0.9, 0.9}
+
+% --- Code block colors ---
+\definecolor{codegreen}{RGB}{101,218,120}
+\definecolor{darkgreen}{RGB}{93,158,82}
+\definecolor{darkyellow}{RGB}{245,194,105}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% --- Theme color command ---
+\makeatletter
+\newcommand{\themecolor}[1]{
+	\ifstrequal{#1}{colorbg}{
+		% \setbeamercolor{background canvas}{bg=maincolor}
+		\renewcommand{\@makelogo}{translogo}
+		\setbeamercolor{normal text}{fg=white, bg=maincolor}
+		\setbeamercolor{structure}{fg=white}
+	}{
+		% \setbeamercolor{background canvas}{bg=white}
+		\renewcommand{\@makelogo}{colorlogo}
+		\setbeamercolor{normal text}{fg=darkgray, bg=white}
+		\setbeamercolor{structure}{fg=maincolor}
+	}
+}
+\makeatother
+\themecolor{white} % default: white theme
+
