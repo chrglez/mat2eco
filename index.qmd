@@ -1,24 +1,22 @@
 ---
-title: "Matemáticas para la Economía II"
-subtitle: "Grado en Economía · ULPGC"
-toc: false
+title: "Presentación"
 ---
 
-Material de la asignatura **Matemáticas para la Economía II** (40706): funciones de varias
-variables, optimización y programación lineal.
+Apuntes de **Matemáticas para la Economía II** (40706), Grado en Economía, Universidad de Las Palmas de Gran Canaria.
 
-::: lead-box
-Este sitio recoge las **transparencias** de cada tema y un **laboratorio** con ejercicios
-resueltos con cálculo simbólico (SymPy) y visualizaciones interactivas.
-Las hojas de ejercicios, prácticas y pruebas se publican **solo en el campus virtual**.
+La asignatura estudia las funciones de varias variables, su cálculo diferencial, la optimización
+con y sin restricciones y una introducción a la programación lineal.
+
+## Cómo está organizado
+
+- **Apuntes**: un capítulo por tema, con definiciones, fórmulas y figuras.
+- **Laboratorio**: páginas interactivas con cálculo simbólico (SymPy) y gráficas que se giran o se mueven con un deslizador. Cada una incluye su código, plegado, para que puedas cambiar la función y comprobar tus propios ejercicios.
+- **Descargas**: las transparencias en PDF.
+
+::: {.callout-tip appearance="simple" icon=false}
+Las hojas de ejercicios, las prácticas y las pruebas se publican **solo en el campus virtual**.
 :::
 
-## Qué encontrarás
-
-- [**Transparencias**](temas.qmd): los cuatro temas en PDF, más la presentación de la asignatura y la guía docente.
-- [**Laboratorio**](laboratorio/index.qmd): páginas interactivas para explorar las ideas del curso (gráficas que se giran, deslizadores y soluciones paso a paso con un sistema de álgebra computacional).
-
-## Cómo usar el laboratorio
-
-Cada página incluye el código (plegado, bajo «Ver el código») con el que se calculó y dibujó todo.
-Puedes copiarlo y cambiar la función para comprobar tus propios ejercicios.
+::: {.callout-note appearance="simple" icon=false}
+El libro está en construcción: algunos capítulos son todavía un esquema o un borrador.
+:::

@@ -1,0 +1,11 @@
+---
+title: "Optimización de funciones de varias variables"
+---
+
+::: {.callout-note appearance="simple" icon=false}
+**En preparación.** Mientras tanto: [transparencias del tema 3 (PDF)](../transparencias/tema3/Trans_tema3.pdf).
+:::
+
+Puntos críticos, matriz hessiana, optimización con restricciones de igualdad y método de Lagrange.
+
+Para ver el método de Lagrange con un ejemplo económico: [Optimización con restricciones: Lagrange](../laboratorio/lagrange.qmd).

@@ -1,0 +1,11 @@
+---
+title: "Funciones de varias variables"
+---
+
+::: {.callout-note appearance="simple" icon=false}
+**En preparación.** Mientras tanto: [transparencias del tema 1 (PDF)](../transparencias/tema1/Trans_tema1.pdf).
+:::
+
+Dominio, curvas de nivel, límites y continuidad de funciones de varias variables.
+
+Para ver las curvas de nivel en acción: [Curvas de nivel y gradiente](../laboratorio/curvas-de-nivel-gradiente.qmd).

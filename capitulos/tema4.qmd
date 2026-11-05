@@ -1,0 +1,9 @@
+---
+title: "Introducción a la programación lineal"
+---
+
+::: {.callout-note appearance="simple" icon=false}
+**En preparación.** Mientras tanto: [transparencias del tema 4 (PDF)](../transparencias/tema4/Trans_tema4.pdf).
+:::
+
+Formulación de problemas de programación lineal, método gráfico y dualidad.

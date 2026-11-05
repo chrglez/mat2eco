@@ -74,3 +74,4 @@ _freeze/
 **/*.quarto_ipynb
 __pycache__/
 transparencias/tema2/web/figuras/indice.json
+transparencias/tema2/web/tema2.html

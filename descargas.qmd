@@ -1,0 +1,17 @@
+---
+title: "Descargas"
+---
+
+Material de apoyo en otros formatos.
+
+| Tema | Transparencias |
+|:--:|:--|
+| 0 | [Presentación de la asignatura (PDF)](mat2eco_presentacion/presentacion_asignatura.pdf) · [Guía docente 25/26](mat2eco_presentacion/guiadocentemat2eco2526.pdf) |
+| 1 | [PDF](transparencias/tema1/Trans_tema1.pdf) |
+| 2 | [PDF](transparencias/tema2/Trans_tema2.pdf) · [Presentación en HTML](transparencias/tema2/web/tema2.html) |
+| 3 | [PDF](transparencias/tema3/Trans_tema3.pdf) |
+| 4 | [PDF](transparencias/tema4/Trans_tema4.pdf) |
+
+En la presentación HTML: **←/→** para avanzar, **S** para el modo orador, **F** para pantalla completa, **O** para la vista general.
+
+Las fuentes están en el [repositorio](https://github.com/chrglez/mat2eco).

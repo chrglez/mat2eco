@@ -6,6 +6,7 @@ on:
     paths:
       - "_quarto.yml"
       - "*.qmd"
+      - "capitulos/**"
       - "styles.scss"
       - "laboratorio/**"
       - "transparencias/tema2/web/**"
@@ -37,6 +38,11 @@ jobs:
       - run: pip install -r requirements.txt
       - uses: quarto-dev/quarto-actions/setup@v2
       - run: quarto render
+      - name: Presentacion del tema 2 (HTML autocontenido)
+        run: |
+          quarto render transparencias/tema2/web/tema2.qmd
+          mkdir -p _site/transparencias/tema2/web
+          cp transparencias/tema2/web/tema2.html _site/transparencias/tema2/web/tema2.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

@@ -35,20 +35,21 @@ format:
     transition: none
     math: mathjax
     pdf-separate-fragments: false
+    embed-resources: true
     footer: "Matemáticas para la Economía II · ULPGC"
 ---
 """
 
 
-def main():
-    t = ORIGEN.read_text(encoding="utf-8")
-    cuerpo = t.split("\n---\n", 1)[1]
+def convertir(cuerpo, ruta_figuras="figuras", raiz_img="../"):
+    """Cuerpo del .qmd Beamer -> markdown sin LaTeX de Beamer. Devuelve (texto, n_figuras)."""
     n = 0
 
     def figura(_):
         nonlocal n
         n += 1
-        return f"![](figuras/fig{n:02d}.svg){{.figura}}"
+        return f"![]({ruta_figuras}/fig{n:02d}.svg){{.figura}}"
+
 
     # 1. figuras TikZ/pgfplots -> SVG (mismo orden que extraer_figuras.py)
     cuerpo = re.sub(r"\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}", figura, cuerpo, flags=re.S)
@@ -57,7 +58,7 @@ def main():
     # 2. restos de LaTeX
     cuerpo = re.sub(r"^\\(?:begin|end)\{center\}\s*\n", "", cuerpo, flags=re.M)
     cuerpo = re.sub(r"\\includegraphics\[width=([\d.]*)\\textwidth\]\{([^}]+)\}",
-                    lambda m: f"![]({RAIZ_IMG}{m.group(2)})"
+                    lambda m: f"![]({raiz_img}{m.group(2)})"
                               f"{{width={int(float(m.group(1) or 1) * 100)}%}}", cuerpo)
     cuerpo = re.sub(r"\\bhref\{([^}]+)\}\{([^}]+)\}\s*\[\\faExternalLink\*\]\{\}",
                     lambda m: f"[{m.group(2)}]({m.group(1).replace(chr(92) + '%', '%')})",
@@ -66,6 +67,13 @@ def main():
                     r'<span style="color:\1">\2</span>', cuerpo)
     cuerpo = re.sub(r"^\\small ", "", cuerpo, flags=re.M)
     cuerpo = re.sub(r"\\textbf\{([^}]*)\}", r"**\1**", cuerpo)
+    return cuerpo, n
+
+
+def main():
+    t = ORIGEN.read_text(encoding="utf-8")
+    cuerpo = t.split("\n---\n", 1)[1]
+    cuerpo, n = convertir(cuerpo)
     # 3. avisos de lo que queda
     resto = re.findall(r"^\s*\\(?:begin|end|small|tiny|vspace|centering|footnotesize)\b[^\n]*",
                        re.sub(r"\$\$.*?\$\$", "", cuerpo, flags=re.S), flags=re.M)

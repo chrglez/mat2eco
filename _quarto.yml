@@ -1,12 +1,12 @@
 project:
-  type: website
+  type: book
   output-dir: _site
-  # Solo estas paginas forman el sitio; las transparencias (qmd) se compilan aparte.
+  # Ademas de los capitulos: la presentacion Reveal.js del tema 2 (enlazada desde Descargas).
   render:
     - index.qmd
-    - temas.qmd
+    - capitulos/*.qmd
     - laboratorio/*.qmd
-    - transparencias/tema2/web/tema2.qmd
+    - descargas.qmd
   resources:
     - transparencias/tema1/Trans_tema1.pdf
     - transparencias/tema2/Trans_tema2.pdf
@@ -16,30 +16,41 @@ project:
     - mat2eco_presentacion/guiadocentemat2eco2526.pdf
 
 lang: es
-website:
+
+book:
   title: "Matemáticas para la Economía II"
+  subtitle: "Apuntes y laboratorio"
+  author: "Christian González-Martel"
+  date: today
+  date-format: "D MMMM YYYY"
   site-url: https://chrglez.github.io/mat2eco/
   repo-url: https://github.com/chrglez/mat2eco
-  navbar:
-    background: primary
-    left:
-      - text: Inicio
-        href: index.qmd
-      - text: Transparencias
-        href: temas.qmd
-      - text: Laboratorio
-        href: laboratorio/index.qmd
-    right:
-      - icon: github
-        href: https://github.com/chrglez/mat2eco
+  repo-actions: [issue]
+  search: true
   page-footer:
-    center: "© Christian González-Martel · Universidad de Las Palmas de Gran Canaria"
+    center: "Universidad de Las Palmas de Gran Canaria"
+  chapters:
+    - index.qmd
+    - part: "Apuntes"
+      chapters:
+        - capitulos/tema1.qmd
+        - capitulos/tema2.qmd
+        - capitulos/tema3.qmd
+        - capitulos/tema4.qmd
+    - part: "Laboratorio"
+      chapters:
+        - laboratorio/index.qmd
+        - laboratorio/curvas-de-nivel-gradiente.qmd
+        - laboratorio/lagrange.qmd
+  appendices:
+    - descargas.qmd
 
 format:
   html:
     theme:
       light: [cosmo, styles.scss]
     toc: true
+    toc-depth: 3
     code-fold: true
     code-summary: "Ver el código"
     lang: es

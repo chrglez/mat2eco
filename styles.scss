@@ -3,4 +3,8 @@ $primary: #80393D;       // color corporativo ULPGC
 $navbar-bg: #80393D;
 $link-color: #80393D;
 /*-- scss:rules --*/
-.lead-box { border-left: 4px solid #80393D; padding: .6rem 1rem; background: rgba(128,57,61,.07); }
+.block { border-left: 4px solid #80393D; padding: .2rem 1rem; margin: .8rem 0; background: rgba(128,57,61,.06); }
+.btextbf { font-weight: 700; color: #2A5C8F; }
+.ctextbf { font-weight: 700; color: #80393D; }
+.source { font-size: .8em; color: #777; }
+img.figura, .figura img { display: block; margin: 1rem auto; max-width: 100%; }

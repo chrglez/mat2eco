@@ -17,6 +17,7 @@ format:
     transition: none
     math: mathjax
     pdf-separate-fragments: false
+    embed-resources: true
     footer: "Matemáticas para la Economía II · ULPGC"
 ---
 
