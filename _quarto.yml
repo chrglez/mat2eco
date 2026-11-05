@@ -1,0 +1,50 @@
+project:
+  type: website
+  output-dir: _site
+  # Solo estas paginas forman el sitio; las transparencias (qmd) se compilan aparte.
+  render:
+    - index.qmd
+    - temas.qmd
+    - laboratorio/*.qmd
+  resources:
+    - transparencias/tema1/Trans_tema1.pdf
+    - transparencias/tema2/Trans_tema2.pdf
+    - transparencias/tema3/Trans_tema3.pdf
+    - transparencias/tema4/Trans_tema4.pdf
+    - mat2eco_presentacion/presentacion_asignatura.pdf
+    - mat2eco_presentacion/guiadocentemat2eco2526.pdf
+
+lang: es
+website:
+  title: "Matemáticas para la Economía II"
+  site-url: https://chrglez.github.io/mat2eco/
+  repo-url: https://github.com/chrglez/mat2eco
+  navbar:
+    background: primary
+    left:
+      - text: Inicio
+        href: index.qmd
+      - text: Transparencias
+        href: temas.qmd
+      - text: Laboratorio
+        href: laboratorio/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/chrglez/mat2eco
+  page-footer:
+    center: "© Christian González-Martel · Universidad de Las Palmas de Gran Canaria"
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles.scss]
+    toc: true
+    code-fold: true
+    code-summary: "Ver el código"
+    lang: es
+    math: mathjax
+
+execute:
+  echo: true
+  warning: false
+jupyter: python3

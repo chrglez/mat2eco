@@ -1,0 +1,152 @@
+---
+title: "Curvas de nivel y gradiente"
+subtitle: "Temas 1 y 2 · el gradiente es perpendicular a la curva de nivel"
+---
+
+## Idea
+
+Para una función $f(x,y)$, la **curva de nivel** de valor $c$ es el conjunto
+$\{(x,y): f(x,y)=c\}$. El **gradiente**
+
+$$
+\nabla f(x,y)=\left(\frac{\partial f}{\partial x},\,\frac{\partial f}{\partial y}\right)
+$$
+
+tiene dos propiedades que vamos a ver con nuestros ojos:
+
+1. es **perpendicular** a la curva de nivel que pasa por el punto;
+2. apunta hacia donde $f$ **crece más deprisa**, y su módulo mide esa rapidez.
+
+## La función
+
+Trabajamos con $f(x,y)=x^2+xy+2y^2$. Puedes cambiar la expresión en el código y
+volver a ejecutar: todo lo demás se recalcula.
+
+```{python}
+import numpy as np
+import sympy as sp
+import plotly.graph_objects as go
+from IPython.display import Math, display
+
+def mostrar(lhs, rhs):
+    """Escribe 'lhs = rhs' en LaTeX (rhs puede ser una expresión o matriz de SymPy)."""
+    display(Math(lhs + " = " + sp.latex(rhs)))
+
+x, y = sp.symbols("x y", real=True)
+f = x**2 + x*y + 2*y**2          # <- cambia aquí la función
+
+fx, fy = sp.diff(f, x), sp.diff(f, y)
+grad = sp.Matrix([fx, fy])
+mostrar(r"\nabla f", grad.T)
+```
+
+SymPy deriva por nosotros. A mano: $f_x = 2x + y$ y $f_y = x + 4y$.
+
+## Gradiente en un punto
+
+```{python}
+P = (1, 1)
+gP = grad.subs({x: P[0], y: P[1]})
+normaP = sp.sqrt(gP.dot(gP))
+mostrar(r"\nabla f(1,1)", gP.T)
+mostrar(r"\|\nabla f(1,1)\|", sp.simplify(normaP))
+```
+
+Su módulo es la **derivada direccional máxima** en $(1,1)$, y se alcanza en la dirección del
+propio gradiente.
+
+## Mueve el punto
+
+Arrastra el deslizador: el punto recorre una circunferencia. La flecha roja es el gradiente
+y el segmento azul es la tangente a la curva de nivel. Forman siempre un ángulo recto.
+
+```{python}
+f_num = sp.lambdify((x, y), f, "numpy")
+fx_num = sp.lambdify((x, y), fx, "numpy")
+fy_num = sp.lambdify((x, y), fy, "numpy")
+
+# Fondo: curvas de nivel
+xs = np.linspace(-3, 3, 200)
+ys = np.linspace(-3, 3, 200)
+X, Y = np.meshgrid(xs, ys)
+Z = f_num(X, Y)
+
+def trazas(theta, r=2.0, k=0.25):
+    """Punto, gradiente (escalado por k) y tangente a la curva de nivel."""
+    px, py = r*np.cos(theta), r*np.sin(theta)
+    gx, gy = float(fx_num(px, py)), float(fy_num(px, py))
+    n = np.hypot(gx, gy)
+    tx, ty = -gy/n, gx/n                      # perpendicular al gradiente
+    return [
+        go.Scatter(x=[px - 1.2*tx, px + 1.2*tx], y=[py - 1.2*ty, py + 1.2*ty],
+                   mode="lines", line=dict(color="royalblue", width=3),
+                   name="tangente a la curva de nivel"),
+        go.Scatter(x=[px, px + k*gx], y=[py, py + k*gy], mode="lines+markers",
+                   line=dict(color="crimson", width=4),
+                   marker=dict(size=[0, 9], symbol="arrow", angleref="previous"),
+                   name="gradiente"),
+        go.Scatter(x=[px], y=[py], mode="markers",
+                   marker=dict(color="black", size=9), name="punto"),
+    ]
+
+thetas = np.linspace(0, 2*np.pi, 73)
+fig = go.Figure(
+    data=[go.Contour(x=xs, y=ys, z=Z, ncontours=18, colorscale="Greys",
+                     contours=dict(showlabels=True), line=dict(width=1),
+                     showscale=False, hoverinfo="skip")] + trazas(thetas[0]),
+    frames=[go.Frame(data=trazas(t), traces=[1, 2, 3], name=f"{i}")
+            for i, t in enumerate(thetas)],
+)
+fig.update_layout(
+    height=560, margin=dict(l=10, r=10, t=10, b=10),
+    xaxis=dict(range=[-3, 3], scaleanchor="y", title="x"),
+    yaxis=dict(range=[-3, 3], title="y"),
+    legend=dict(orientation="h", y=-0.12),
+    sliders=[dict(active=0, currentvalue=dict(prefix="ángulo del punto: "),
+                  steps=[dict(method="animate", label=f"{int(np.degrees(t))}°",
+                              args=[[f"{i}"], dict(mode="immediate",
+                                                   frame=dict(duration=0, redraw=True))])
+                         for i, t in enumerate(thetas)])],
+)
+fig
+```
+
+## La superficie
+
+La misma función como superficie en $\mathbb{R}^3$. Las curvas de nivel son los cortes
+horizontales proyectados sobre el plano.
+
+```{python}
+surf = go.Figure(go.Surface(
+    x=xs, y=ys, z=Z, colorscale="Viridis", opacity=0.9,
+    contours=dict(z=dict(show=True, usecolormap=True, project_z=True)),
+    showscale=False))
+surf.update_layout(height=520, margin=dict(l=0, r=0, t=0, b=0),
+                   scene=dict(xaxis_title="x", yaxis_title="y", zaxis_title="f"))
+surf
+```
+
+## Comprobación simbólica
+
+¿De verdad es el gradiente perpendicular a la curva de nivel? Si $(x(t),y(t))$ recorre la
+curva $f=c$, derivando $f(x(t),y(t))=c$ con la regla de la cadena:
+
+$$
+f_x\,x'(t)+f_y\,y'(t)=\nabla f\cdot(x',y')=0 .
+$$
+
+Un vector tangente a la curva de nivel en cada punto es $(-f_y,\,f_x)$. Comprobamos que su
+producto escalar con el gradiente es idénticamente cero, sea cual sea $f$.
+
+```{python}
+tang = sp.Matrix([-fy, fx])
+mostrar(r"\nabla f \cdot (-f_y,\, f_x)", sp.simplify(grad.dot(tang)))
+```
+
+## Ejercicios
+
+1. Cambia $f$ por $x^2 - y^2$ y observa cómo cambian las curvas de nivel. ¿Dónde se anula
+   el gradiente? ¿Qué tipo de punto es?
+2. Prueba $f=xy$ (Cobb-Douglas con $\alpha=\beta=1$). ¿Cómo son las curvas de nivel y hacia
+   dónde apunta el gradiente?
+3. Calcula a mano $\nabla f(1,1)$ para $f=x^2+xy+2y^2$ y contrasta con SymPy.

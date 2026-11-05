@@ -63,3 +63,12 @@ transparencias/**/trans2img_ppt/
 transparencias/**/pdf2jpg/
 transparencias/**/tikz-sandbox.pdf
 transparencias/**/contenido_*_extraido.txt
+
+# Entorno de Python del sitio
+.venv/
+_site/
+_freeze/
+.quarto/
+
+/.quarto/
+**/*.quarto_ipynb

@@ -1,0 +1,14 @@
+---
+title: "Transparencias"
+toc: false
+---
+
+| Tema | Contenido | PDF |
+|:--:|:--|:--:|
+| 0 | Presentación de la asignatura | [PDF](mat2eco_presentacion/presentacion_asignatura.pdf) · [Guía docente 25/26](mat2eco_presentacion/guiadocentemat2eco2526.pdf) |
+| 1 | Funciones de varias variables: dominio, curvas de nivel, límites y continuidad | [PDF](transparencias/tema1/Trans_tema1.pdf) |
+| 2 | Cálculo diferencial de funciones de varias variables | [PDF](transparencias/tema2/Trans_tema2.pdf) |
+| 3 | Introducción a la optimización de funciones de varias variables | [PDF](transparencias/tema3/Trans_tema3.pdf) |
+| 4 | Introducción a la programación lineal | [PDF](transparencias/tema4/Trans_tema4.pdf) |
+
+Las fuentes (Quarto) están en el [repositorio](https://github.com/chrglez/mat2eco).

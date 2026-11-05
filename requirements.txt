@@ -1,0 +1,8 @@
+jupyter-core
+nbformat
+nbclient
+ipykernel
+pyyaml
+sympy
+numpy
+plotly

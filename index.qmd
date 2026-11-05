@@ -1,0 +1,24 @@
+---
+title: "Matemáticas para la Economía II"
+subtitle: "Grado en Economía · ULPGC"
+toc: false
+---
+
+Material de la asignatura **Matemáticas para la Economía II** (40706): funciones de varias
+variables, optimización y programación lineal.
+
+::: lead-box
+Este sitio recoge las **transparencias** de cada tema y un **laboratorio** con ejercicios
+resueltos con cálculo simbólico (SymPy) y visualizaciones interactivas.
+Las hojas de ejercicios, prácticas y pruebas se publican **solo en el campus virtual**.
+:::
+
+## Qué encontrarás
+
+- [**Transparencias**](temas.qmd): los cuatro temas en PDF, más la presentación de la asignatura y la guía docente.
+- [**Laboratorio**](laboratorio/index.qmd): páginas interactivas para explorar las ideas del curso (gráficas que se giran, deslizadores y soluciones paso a paso con un sistema de álgebra computacional).
+
+## Cómo usar el laboratorio
+
+Cada página incluye el código (plegado, bajo «Ver el código») con el que se calculó y dibujó todo.
+Puedes copiarlo y cambiar la función para comprobar tus propios ejercicios.
