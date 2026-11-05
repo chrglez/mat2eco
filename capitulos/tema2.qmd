@@ -2,128 +2,277 @@
 title: "Cálculo de funciones de varias variables"
 ---
 
-<!-- BORRADOR GENERADO: generar_libro.py -->
-
 ::: {.callout-note appearance="simple" icon=false}
-**Borrador.** Este capítulo se ha generado a partir de las transparencias del tema 2:
-conserva definiciones, fórmulas y figuras, pero aún falta el texto explicativo.
+**En construcción.** El apartado 1 está escrito; los demás conservan por ahora el esquema de las
+transparencias (definiciones, fórmulas y figuras) y se irán desarrollando.
 Mientras tanto, la [presentación](../transparencias/tema2/web/tema2.html) y el
 [PDF](../transparencias/tema2/Trans_tema2.pdf) están disponibles.
 :::
 
 
-## Cálculo de derivadas parciales {#apartado-1}
+## Derivadas parciales {#apartado-1}
 
-### Derivada de función real de una variable real
+Una empresa produce con dos factores, trabajo $L$ y capital $K$, y su producción es
+$Q=f(L,K)$. La pregunta más natural para el gerente es: *si contrato un trabajador más,
+¿cuánto aumenta la producción?* Es una pregunta sobre **cómo cambia la función cuando se mueve
+una sola variable y las demás se quedan quietas**. Las derivadas parciales son la herramienta
+que responde a eso. Antes de definirlas, repasamos la derivada de una variable, de la que
+heredan todo.
 
-Sea $f : A \subseteq \mathbb{R} \to \mathbb{R}$, con $x \to y = f(x)$
+### El punto de partida: una variable
 
+Para una función $f:A\subseteq\mathbb{R}\to\mathbb{R}$, la derivada en $x_0$ mide la **tasa de
+variación instantánea** de $f$:
 
 ::: {.block}
 $$
-f'(x_o) = \frac{df}{dx}(x_0) = \lim_{h\to 0} \frac{f(x_0 + h) - f(x_0)}{h}
+f'(x_0)=\frac{df}{dx}(x_0)=\lim_{h\to 0}\frac{f(x_0+h)-f(x_0)}{h}
 $$
 :::
 
-::: {.contenedor}
-![](../transparencias/tema2/web/figuras/fig01.svg){.figura}
-Interpretación geométrica de la derivada.
+El cociente es la pendiente de la recta que une dos puntos de la gráfica; al hacer $h\to 0$ esa
+recta se convierte en la **tangente**, y $f'(x_0)$ es su pendiente. En economía es la idea de
+«marginal»: si $C(q)$ es el coste de producir $q$ unidades, $C'(q)$ es el coste marginal, lo
+que cuesta aproximadamente fabricar una unidad más.
+
+![La derivada es la pendiente de la tangente a la gráfica.](../transparencias/tema2/web/figuras/fig01.svg){#fig-derivada-1var .figura fig-alt="Gráfica de una función con su recta tangente en un punto"}
+
+### Con dos variables hay que elegir una dirección
+
+Si $f$ depende de dos variables, $f:A\subseteq\mathbb{R}^2\to\mathbb{R}$, ya no hay *una*
+pendiente: la gráfica $z=f(x,y)$ es una superficie y, desde un punto, puedes avanzar en
+infinitas direcciones. Empezamos por las dos más sencillas: moverse solo en $x$ o solo en $y$.
+
+La **derivada parcial respecto a $x$** en $(x_0,y_0)$ es la derivada de una variable que
+resulta de **congelar** $y=y_0$:
+
+::: {.block}
+$$
+f_x(x_0,y_0)=\frac{\partial f}{\partial x}(x_0,y_0)=
+\lim_{h\to 0}\frac{f(x_0+h,\,y_0)-f(x_0,\,y_0)}{h}
+$$
 :::
 
+y la **derivada parcial respecto a $y$**, congelando $x=x_0$:
 
-### Derivada de función real de varias variables | Función de dos variables
-
-Sea $f : A \subseteq \mathbb{R}^2 \to \mathbb{R}$, con $(x,y) \to z = f(x,y)$
-
-La [ derivada parcial de $f$ respecto a $x$ ]{.btextbf} en el punto $(x_o, y_o)$ se define como:
-
+::: {.block}
 $$
-\lim_{h\to 0} \frac{f(x_o + h, y_o) - f(x_o, y_o)}{h}
+f_y(x_0,y_0)=\frac{\partial f}{\partial y}(x_0,y_0)=
+\lim_{h\to 0}\frac{f(x_0,\,y_0+h)-f(x_0,\,y_0)}{h}
 $$
-
-**Notación:**
-
-$$
-\frac{\partial z}{\partial x}(x_o, y_o) = f_x(x_o, y_o) = \frac{\partial f}{\partial x}(x_o, y_o)
-$$
-
-
-### Derivada parcial de $f$ con respecto a $x$
-
-::: {.columns}
-::: {.column width="55%"}
-![](../transparencias/tema2/web/figuras/fig02.svg){.figura}
-
 :::
 
-::: {.column width="45%"}
-![](../transparencias/tema2/web/figuras/fig03.svg){.figura}
+Ambas se escriben también $\dfrac{\partial z}{\partial x}$ y $\dfrac{\partial z}{\partial y}$.
+Fíjate en que el símbolo es $\partial$ y no $d$: recuerda que hay más variables ahí fuera.
 
+### Qué significan geométricamente
+
+Congelar $y=y_0$ equivale a **cortar la superficie con un plano vertical**. El corte es una
+curva, $z=f(x,y_0)$, que ya depende solo de $x$; $f_x(x_0,y_0)$ es la pendiente de su tangente.
+
+::::: {.columns}
+:::: {.column width="55%"}
+![La superficie y el plano $y=y_0$; la tangente (naranja) está dentro del plano.](../transparencias/tema2/web/figuras/fig02.svg){.figura}
+::::
+:::: {.column width="45%"}
+![La curva resultante $z=f(x,y_0)$ y su tangente en $x_0$.](../transparencias/tema2/web/figuras/fig03.svg){.figura}
+::::
+:::::
+
+Con $f_y$ ocurre lo mismo cortando con el plano $x=x_0$.
+
+::::: {.columns}
+:::: {.column width="55%"}
+![La superficie y el plano $x=x_0$.](../transparencias/tema2/web/figuras/fig04.svg){.figura}
+::::
+:::: {.column width="45%"}
+![La curva $z=f(x_0,y)$ y su tangente en $y_0$.](../transparencias/tema2/web/figuras/fig05.svg){.figura}
+::::
+:::::
+
+### Cómo se calculan
+
+No hace falta usar el límite. La definición dice que, para derivar respecto a $x$, la variable
+$y$ se comporta como una **constante**. Basta aplicar las reglas de siempre tratando a las demás
+variables como números.
+
+::: {.callout-tip appearance="simple" icon=false}
+**Regla práctica.** Para calcular $f_x$ deriva respecto a $x$ y trata $y$ como una constante.
+Para $f_y$, al revés.
 :::
-:::
 
-
-### Derivada de función real de varias variables | Función de dos variables
-
-De manera análoga, la [ derivada parcial de $f$ respecto a $y$ ]{.btextbf} en el punto $(x_o, y_o)$ se define como:
-
+**Ejemplo.** Una empresa tiene la función de producción
 $$
-\lim_{h\to 0} \frac{f(x_o, y_o + h) - f(x_o, y_o)}{h}
+Q(L,K)=10\sqrt{L\,K}=10\,L^{1/2}K^{1/2}.
 $$
-
-**Notación:**
-
+Derivando respecto a $L$ con $K$ constante, y respecto a $K$ con $L$ constante:
 $$
-\frac{\partial z}{\partial y}(x_o, y_o) = f_y(x_o, y_o) = \frac{\partial f}{\partial y}(x_o, y_o)
-$$
-
-
-### Derivada parcial de $f$ con respecto a $y$
-
-::: {.columns}
-::: {.column width="55%"}
-![](../transparencias/tema2/web/figuras/fig04.svg){.figura}
-
-:::
-
-::: {.column width="45%"}
-![](../transparencias/tema2/web/figuras/fig05.svg){.figura}
-
-:::
-:::
-
-
-### Aplicaciones económicas | Productividad marginal
-
-[Productividad marginal](http://es.wikipedia.org/wiki/Productividad_marginal)
-
-![](../transparencias/tema2/img-png/producto_marginal_1_apendice.png){width=75%}
-[Fuente: Varian, *Microeconomía intermedia*, §18.5]{.source}
-
-### Aplicaciones económicas | Utilidad marginal
-
-[Utilidad marginal](http://es.wikipedia.org/wiki/Utilidad_marginal)
-
-::: {.columns}
-::: {.column width="55%"}
-![](../transparencias/tema2/img-png/utilidad_marginal_1.png){width=100%}
-:::
-
-::: {.column width="45%"}
-![](../transparencias/tema2/img-png/utilidad_marginal_1_apendice.png){width=100%}
-:::
-:::
-
-[Fuente: Varian, *Microeconomía intermedia*, §4.4 y apéndice]{.source}
-
-### Aplicaciones económicas | Elasticidad
-
-[Elasticidad](http://es.wikipedia.org/wiki/Elasticidad_%28economía%29)
-
-$$
-\eta_{f\_x} = \frac{x}{f(x,y)} \cdot \frac{\partial f}{\partial x}(x,y) \qquad \eta_{f\_y} = \frac{y}{f(x,y)} \cdot \frac{\partial f}{\partial y}(x,y)
+Q_L=5\,L^{-1/2}K^{1/2}=5\sqrt{\frac{K}{L}},\qquad
+Q_K=5\,L^{1/2}K^{-1/2}=5\sqrt{\frac{L}{K}}.
 $$
 
+Lo comprobamos con SymPy y evaluamos en el punto $(L,K)=(25,16)$, donde se producen
+$Q=10\sqrt{400}=200$ unidades:
+
+```{python}
+#| label: prod-parciales
+import numpy as np
+import sympy as sp
+import plotly.graph_objects as go
+from IPython.display import Math, display
+
+def mostrar(lhs, rhs):
+    """Escribe 'lhs = rhs' en LaTeX (rhs: expresión de SymPy)."""
+    display(Math(lhs + " = " + sp.latex(rhs)))
+
+L, K = sp.symbols("L K", positive=True)
+Q = 10*sp.sqrt(L*K)                      # <- cambia aquí la función de producción
+
+QL, QK = sp.diff(Q, L), sp.diff(Q, K)
+mostrar("Q_L", sp.simplify(QL))
+mostrar("Q_K", sp.simplify(QK))
+
+p = {L: 25, K: 16}
+mostrar("Q(25,16)", Q.subs(p))
+mostrar("Q_L(25,16)", QL.subs(p))
+mostrar("Q_K(25,16)", QK.subs(p))
+```
+
+### Una derivada parcial es una variación aproximada
+
+Aquí está el sentido económico. $Q_L(25,16)=4$ significa que, **con el capital fijo en 16**,
+un trabajador más aumenta la producción en unas 4 unidades. Es el **producto marginal del
+trabajo**. Como $Q_L$ es la pendiente de la tangente, vale como aproximación de la variación
+real cuando el cambio es pequeño:
+
+$$
+\Delta Q\approx Q_L\cdot\Delta L .
+$$
+
+Comparamos con el aumento exacto al pasar de 25 a 26 trabajadores:
+
+```{python}
+#| label: prod-incremento
+real = (Q.subs({L: 26, K: 16}) - Q.subs({L: 25, K: 16}))
+aprox = QL.subs({L: 25, K: 16})*1
+print(f"aumento exacto  Q(26,16) - Q(25,16) = {float(real):.4f}")
+print(f"aproximación    Q_L(25,16) · 1     = {float(aprox):.4f}")
+```
+
+La diferencia es de unas centésimas: la tangente se pega mucho a la curva cerca del punto. Esta
+idea, aproximar una variación con derivadas, es la **diferencial** y la veremos en el
+próximo apartado.
+
+### Productividad marginal decreciente
+
+¿Siempre vale 4 un trabajador más? No. Mueve el deslizador: la curva es $Q(L,16)$, es decir,
+la producción cuando varía el trabajo y el capital sigue en 16. La recta es la tangente en el
+punto elegido, y su pendiente es el producto marginal.
+
+```{python}
+#| label: prod-deslizador
+Qn = sp.lambdify((L, K), Q, "numpy")
+QLn = sp.lambdify((L, K), QL, "numpy")
+K0 = 16
+Ls = np.linspace(0.5, 100, 300)
+
+def trazas(L0, ancho=18):
+    q0, m0 = float(Qn(L0, K0)), float(QLn(L0, K0))
+    return [go.Scatter(x=[L0 - ancho, L0 + ancho], y=[q0 - m0*ancho, q0 + m0*ancho],
+                       mode="lines", line=dict(color="crimson", width=3),
+                       name="tangente"),
+            go.Scatter(x=[L0], y=[q0], mode="markers",
+                       marker=dict(color="black", size=10), name="punto")]
+
+def titulo(L0):
+    return (f"L = {L0:.0f}   Q = {float(Qn(L0, K0)):.1f}   "
+            f"producto marginal Q_L = {float(QLn(L0, K0)):.2f}")
+
+pasos = np.arange(5, 100, 5)
+fig = go.Figure(
+    data=[go.Scatter(x=Ls, y=Qn(Ls, K0), mode="lines",
+                     line=dict(color="royalblue", width=3), name="Q(L, 16)")] + trazas(pasos[0]),
+    frames=[go.Frame(data=trazas(L0), traces=[1, 2], layout=dict(title_text=titulo(L0)),
+                     name=f"{L0}") for L0 in pasos],
+)
+fig.update_layout(
+    height=480, margin=dict(l=10, r=10, t=60, b=10),
+    title=dict(text=titulo(pasos[0]), font=dict(size=14)),
+    xaxis=dict(range=[0, 100], title="L (trabajo)"),
+    yaxis=dict(range=[0, 420], title="Q (producción)"),
+    legend=dict(orientation="h", y=-0.15),
+    sliders=[dict(active=0, currentvalue=dict(prefix="trabajo L = "),
+                  steps=[dict(method="animate", label=f"{L0}",
+                              args=[[f"{L0}"], dict(mode="immediate",
+                                                    frame=dict(duration=0, redraw=True))])
+                         for L0 in pasos])],
+)
+fig
+```
+
+La tangente se va aplanando: cada trabajador adicional aporta **menos** que el anterior. Es la
+ley de los rendimientos marginales decrecientes, y en términos de derivadas es simplemente que
+$Q_L$ decrece con $L$. Lo puedes comprobar derivando otra vez: $Q_{LL}=-\tfrac{5}{2}L^{-3/2}K^{1/2}<0$.
+
+### Más aplicaciones económicas
+
+El mismo patrón, «derivada respecto a una variable manteniendo las demás fijas», aparece en
+toda la microeconomía:
+
+- **Utilidad marginal.** Si $U(x_1,x_2)$ es la utilidad de la cesta $(x_1,x_2)$, la utilidad
+  marginal del bien 1 es $UM_1=\partial U/\partial x_1$ y cumple $\Delta U\approx UM_1\,\Delta x_1$
+  (Varian, *Microeconomía intermedia*, §4.4).
+- **Producto marginal.** Es lo que acabamos de ver: $PM_L=\partial Q/\partial L$ y
+  $PM_K=\partial Q/\partial K$ (Varian, §18.5).
+- **Elasticidad.** Mide la respuesta **en porcentaje**: si $x$ sube un 1 %, ¿en qué porcentaje
+  cambia $f$ (aproximadamente)?
+
+::: {.block}
+$$
+\varepsilon_{f,x}=\frac{x}{f(x,y)}\cdot\frac{\partial f}{\partial x}(x,y),\qquad
+\varepsilon_{f,y}=\frac{y}{f(x,y)}\cdot\frac{\partial f}{\partial y}(x,y)
+$$
+:::
+
+La ventaja de la elasticidad es que **no depende de las unidades** en que midas las variables.
+Para nuestra empresa:
+
+```{python}
+#| label: prod-elasticidad
+eps_L = sp.simplify(L/Q * QL)
+eps_K = sp.simplify(K/Q * QK)
+mostrar(r"\varepsilon_{Q,L}", eps_L)
+mostrar(r"\varepsilon_{Q,K}", eps_K)
+```
+
+Ambas valen $\tfrac12$: un 1 % más de trabajo (o de capital) aumenta la producción en torno
+a un 0,5 %. Observa que suman 1; esto no es casualidad y lo entenderemos en el apartado de
+funciones homogéneas.
+
+### Ejercicios
+
+1. Calcula $f_x$ y $f_y$ para $f(x,y)=x^2y+3xy^2$ y evalúalas en $(1,2)$.
+
+   ::: {.callout-note collapse="true" title="Solución"}
+   $f_x=2xy+3y^2$ y $f_y=x^2+6xy$. En $(1,2)$: $f_x=4+12=16$ y $f_y=1+12=13$.
+   :::
+
+2. Un consumidor tiene utilidad $U(x,y)=x^{0.3}y^{0.7}$. Calcula la utilidad marginal del bien
+   $x$ en la cesta $(10,20)$ e interprétala.
+
+   ::: {.callout-note collapse="true" title="Solución"}
+   $UM_x=0{,}3\,x^{-0{,}7}y^{0{,}7}=0{,}3\,(y/x)^{0{,}7}$; en $(10,20)$ vale
+   $0{,}3\cdot 2^{0{,}7}\approx 0{,}487$. Con $y=20$ fijo, una unidad más del bien $x$
+   aumenta la utilidad en unas 0,49 unidades.
+   :::
+
+3. Para $Q=10\sqrt{LK}$, ¿cuál es la elasticidad de $Q$ respecto a $K$ en cualquier punto?
+   Comprueba el resultado con SymPy cambiando la función del código de arriba.
+
+   ::: {.callout-note collapse="true" title="Solución"}
+   $\varepsilon_{Q,K}=\dfrac{K}{Q}\,Q_K=\dfrac{K}{10\sqrt{LK}}\cdot 5\sqrt{\dfrac{L}{K}}=\dfrac12$,
+   constante.
+   :::
 
 ## La diferencial total {#apartado-2}
 
