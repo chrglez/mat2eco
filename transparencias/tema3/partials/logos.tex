@@ -1,0 +1,22 @@
+% Logos propios de Tema 3 con nombres únicos
+\pgfdeclareimage[width=0.09\paperwidth]{t3colorlogo}{assets/color-logo.png}
+\pgfdeclareimage[width=0.09\paperwidth]{t3translogo}{assets/trans-logo.png}
+% Apuntar al logo verde desde el inicio
+\makeatletter
+\renewcommand{\@makelogo}{t3colorlogo}
+% Redefinir themecolor usando \csname para evitar problemas con @
+\renewcommand{\themecolor}[1]{%
+  \ifstrequal{#1}{colorbg}{%
+    \setbeamercolor{background canvas}{bg=maincolor}%
+    \def\@makelogo{t3translogo}%
+    \setbeamercolor{normal text}{fg=white, bg=maincolor}%
+    \setbeamercolor{structure}{fg=white}%
+  }{%
+    \setbeamercolor{background canvas}{bg=white}%
+    \def\@makelogo{t3colorlogo}%
+    \setbeamercolor{normal text}{fg=darkgray, bg=white}%
+    \setbeamercolor{structure}{fg=maincolor}%
+  }%
+}
+\makeatother
+\themecolor{white}

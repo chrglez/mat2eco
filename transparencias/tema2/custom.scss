@@ -1,0 +1,80 @@
+/*-- scss:defaults --*/
+
+// Colors from Rutgers theme
+$primary-color: #cc0033;
+$link-color: $primary-color;
+
+/*-- scss:rules --*/
+
+// Title slide customization
+.reveal .slide-background.title-slide {
+  background-image: url("img/logo.png");
+  background-position: 9% 15%;
+  background-size: 255px;
+  background-repeat: no-repeat;
+}
+
+// Center content vertically and horizontally
+.center, .center2 {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Index slide with many items - compact layout
+.reveal section.unnumbered {
+  p {
+    line-height: 1.4;
+    margin: 0.3em 0;
+  }
+
+  a {
+    font-size: 0.85em;
+  }
+}
+
+// Small text
+.small {
+  font-size: 0.6em;
+}
+
+// Inverse slides (dark background)
+.reveal .inverse {
+  background-color: $primary-color;
+  color: white;
+
+  h1, h2, h3, h4, h5, h6 {
+    color: white;
+  }
+}
+
+// Callout boxes styling
+.reveal .callout-tip {
+  border-left-color: $primary-color;
+}
+
+// Column layout fixes
+.reveal .column {
+  display: inline-block;
+  vertical-align: top;
+}
+
+// Links styling
+.reveal a {
+  color: $primary-color;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+  }
+}
+
+// Incremental lists styling
+.reveal .incremental > * {
+  opacity: 0.5;
+}
+
+.reveal .incremental > *.current-fragment {
+  opacity: 1;
+}

@@ -1,0 +1,677 @@
+---
+title: "Matemáticas para la Economía II"
+subtitle: "Tema 3: Introducción a la optimización de varias variables"
+author: "Christian González"
+institute: "Universidad de Las Palmas de Gran Canaria"
+curso: "Curso 25/26"
+license: "CC BY-NC-SA"
+copyright:
+  holder: "Christian González"
+  year: 2025
+format:
+  beamer:
+    filters:
+        - ../tema1/filters/format-span.lua
+    listings: true
+    aspectratio: 169
+    lang: es
+    keep-tex: true
+    pdf-engine-opts:
+      - "-shell-escape"
+    include-in-header:
+      - ../tema1/partials/packages.tex
+      - ../tema1/partials/theme-config.tex
+      - text: |
+          % Theme color: #007051 for Tema 3
+          \definecolor{maincolor}{RGB}{0, 112, 81}
+          \themecolor{white}
+      - partials/logos.tex
+      - ../tema1/partials/beamer-config.tex
+      - ../tema1/partials/custom-commands.tex
+      - ../tema1/partials/special-pages.tex
+      - partials/final-page.tex
+      - text: |
+          % Estilos TikZ personalizados para Tema 3
+          \usetikzlibrary{positioning, tikzmark, calc}
+          \usepackage{booktabs}
+          \usepackage{colortbl}
+          \tikzset{
+            axis/.style={->, thick},
+            vector/.style={-Stealth, very thick},
+            point/.style={circle, fill, inner sep=1.5pt},
+            point label/.style={font=\scriptsize},
+            axis label/.style={font=\tiny, scale=0.8},
+            opt arrow/.style={-Stealth, thick, orange!80!black},
+            level curve/.style={thick, smooth}
+          }
+    template-partials:
+      - ../tema1/partials/title.tex
+---
+
+# Planteamiento de un problema de optimización {#sec-planteamiento}
+
+## Planteamiento de un problema de optimización {.shrink}
+
+<!-- Referencia: pdf2jpg/Tema3_Página_03.jpg -->
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.25cm, remember picture]
+  % "Opt." y función objetivo
+  \node[font=\normalsize] (opt) {Opt.};
+  \node[draw=orange!80!black, fill=orange!15, rounded corners=4pt,
+        inner sep=5pt, right=0.2cm of opt, font=\small] (fobj)
+    {$f\!\bigl(\tikzmark{xstart}x_1,x_2,\ldots,x_n\tikzmark{xend}\bigr)$};
+
+  % Restricciones
+  \node[draw=gray!50, fill=gray!8, rounded corners=4pt,
+        inner sep=8pt, below=0.9cm of fobj.south, anchor=north, font=\small] (constr) {
+    $\begin{array}{rcl}
+      g_1\bigl(x_1,\ldots,x_n\bigr) & \leq & b_1 \\[3pt]
+      g_2\bigl(x_1,\ldots,x_n\bigr) & \leq & b_2 \\[2pt]
+      \multicolumn{3}{c}{\vdots} \\[2pt]
+      g_m\bigl(x_1,\ldots,x_n\bigr) & \leq & b_m
+    \end{array}$
+  };
+
+  % "s.a." misma columna que "Opt." (mismo x)
+  \node[font=\normalsize, anchor=north] (sa) at (opt |- constr.north) {s.a.};
+
+  % Etiquetas
+  \node[font=\small, right=3.2cm of fobj]    (lobj) {Función objetivo};
+  \node[font=\small, right=2.0cm of constr]  (lcon) {Restricciones};
+
+  % Flechas (color según nodo)
+  \draw[-Stealth, thick, orange!80!black] (fobj.east)   -- (lobj.west);
+  \draw[-Stealth, thick, gray!60!black]   (constr.east) -- (lcon.west);
+\end{tikzpicture}
+\end{center}
+
+\begin{tikzpicture}[overlay, remember picture]
+  % Recuadro sin fill para no tapar el texto
+  \draw[draw=maincolor, rounded corners=3pt, line width=0.6pt]
+    ($(pic cs:xstart)+(-2pt, 1.8ex)$) rectangle ($(pic cs:xend)+(2pt, -0.5ex)$);
+  % Etiqueta y flecha en color maincolor
+  \node[font=\small, anchor=west] (ldec)
+    at ($(pic cs:xend)+(3.5cm, -2.5ex)$) {Variables de decisión};
+  \draw[-Stealth, thick, maincolor]
+    ($(pic cs:xstart)!0.5!(pic cs:xend)+(0pt,-0.5ex)$) |- (ldec.west);
+\end{tikzpicture}
+
+\vspace{-0.3cm}
+
+- El \ctextbf{conjunto de oportunidades} o \ctextbf{conjunto factible} es el subconjunto formado por la intersección del conjunto que satisface las restricciones del problema y aquél en el que están definidas la función objetivo y las restricciones.
+- Los valores que verifican las restricciones se denominan \ctextbf{soluciones factibles} del programa matemático. Su denominación responde a que todas ellas son candidatas a ser solución del mismo.
+- La solución factible que proporciona el óptimo se denomina \ctextbf{solución óptima}.
+
+## Óptimos globales
+
+<!-- Referencia: pdf2jpg/Tema3_Página_04.jpg -->
+
+Sea el problema:
+$$
+\text{Opt} \quad f(x) \qquad \text{s.a.} \quad x \in F, \quad x = (x_1, \ldots, x_n) \in \mathbb{R}^n
+$$
+
+- $x^* \in F$ es \ctextbf{máximo global} o absoluto de $f$ en $F$ si y solo si
+$$f\bigl(x^*\bigr) \geq f(x), \quad \forall x \in F$$
+
+- $x^* \in F$ es \ctextbf{mínimo global} o absoluto de $f$ en $F$ si y solo si
+$$f\bigl(x^*\bigr) \leq f(x), \quad \forall x \in F$$
+
+## Óptimos locales
+
+Sea el problema:
+$$
+\text{Opt} \quad f(x) \qquad \text{s.a.} \quad x \in F, \quad x = (x_1, \ldots, x_n) \in \mathbb{R}^n
+$$
+
+- $x_0 \in F$ es \ctextbf{máximo local} o relativo de $f$ en $F$ si y solo si:
+$$\exists\, \delta > 0 \mid f(x_0) \geq f(x), \quad \forall x \in B(x_0, \delta) \cap F$$
+
+- $x_0 \in F$ es \ctextbf{mínimo local} o relativo de $f$ en $F$ si y solo si:
+$$\exists\, \delta > 0 \mid f(x_0) \leq f(x), \quad \forall x \in B(x_0, \delta) \cap F$$
+
+## Planteamiento de un problema de optimización
+
+<!-- Referencia: pdf2jpg/Tema3_Página_05.jpg -->
+
+::: {#fig-max-min-global}
+\begin{tikzpicture}
+\begin{axis}[
+  view={-37.5}{30},
+  width=12cm, height=8cm,
+  xlabel={$x$}, ylabel={$y$},
+  xtick={-2,0,2}, ytick={-2,0,2},
+  ztick={-5,0,5},
+  xticklabel style={font=\tiny},
+  yticklabel style={font=\tiny},
+  zticklabel style={font=\tiny},
+  domain=-3:3, y domain=-3:3,
+  samples=35,
+  colormap={coolwarm}{
+    rgb255(0cm)=(59,76,192);
+    rgb255(2cm)=(106,137,247);
+    rgb255(4cm)=(192,212,255);
+    rgb255(5cm)=(235,235,235);
+    rgb255(6cm)=(255,195,170);
+    rgb255(8cm)=(229,82,45);
+    rgb255(10cm)=(180,4,38)},
+  point meta min=-8, point meta max=8,
+]
+\addplot3[surf, shader=flat corner, draw=black!25, line width=0.1pt]
+  {3*(1-x)^2*exp(-x^2-(y+1)^2)
+   - 10*(x/5-x^3-y^5)*exp(-x^2-y^2)
+   - 1/3*exp(-(x+1)^2-y^2)};
+
+% Máximo global ~ (0, 1.6, 8.1)
+\node[font=\tiny, fill=white, opacity=0.9, inner sep=1pt] (maxglob)
+  at (axis cs:1.2, 1.0, 9.2) {Máximo global};
+\draw[-Stealth, very thin] (maxglob.west) -- (axis cs:0.1,1.5,8.2);
+
+% Máximos locales ~ (-1.35, 0.2, 4.0) — label a la derecha fuera de la superficie
+\node[font=\tiny, fill=white, opacity=0.9, inner sep=1pt] (maxloc)
+  at (axis cs:2.5, -0.5, 6.8) {Máximos locales};
+\draw[-Stealth, very thin] (axis cs:2.2,-0.4,6.3) -- (axis cs:0.85,0.85,1.1);
+\draw[-Stealth, very thin] (axis cs:2.2,-0.4,6.3) -- (axis cs:1.85,0.2,3.1);
+
+% Mínimo global ~ (0.2, -1.63, -6.55)
+\node[font=\tiny, fill=white, opacity=0.9, inner sep=1pt] (minglob)
+  at (axis cs:2.0, -2.5, -5.5) {Mínimo global};
+\draw[-Stealth, very thin] (minglob.west) -- (axis cs:0.3,-1.7,-6.5);
+
+% Mínimo local ~ (-1.0, 0.0, -1.65)
+\node[font=\tiny, fill=white, opacity=0.9, inner sep=1pt]
+  at (axis cs:-2.8, -1.0, -5.5) {Mínimo local};
+\draw[-Stealth, very thin] (axis cs:-2.7,-1.0,-5.2) -- (axis cs:-2.0,-0.2,-3.7);
+
+\end{axis}
+\end{tikzpicture}
+
+{\small Máximos y mínimos globales y locales para la función [\texttt{peaks}](https://es.mathworks.com/help/matlab/ref/peaks.html).}
+:::
+
+# Optimización sin restricciones {#sec-sin-restricciones}
+
+## Optimización sin restricciones
+
+<!-- Referencia: pdf2jpg/Tema3_Página_06.jpg -->
+
+:::: {.columns}
+
+::: {.column width="46%"}
+
+::: {#fig-gradiente-cero}
+\begin{tikzpicture}
+\begin{axis}[
+  view={120}{28},
+  width=7.5cm, height=6.5cm,
+  xtick=\empty, ytick=\empty, ztick=\empty,
+  domain=-3.5:3.5, y domain=-3.5:3.5,
+  samples=28,
+  colormap={neutral}{color(0)=(white!75!gray); color(1)=(white!95!gray)},
+]
+% Superficie tipo mesh
+\addplot3[surf, shader=flat corner, draw=gray!55, line width=0.2pt]
+  {cos(deg(x))*cos(deg(y))};
+
+% Plano tangente en máximo (0,0,1) — verde
+\addplot3[surf, shader=flat, fill=maincolor!35, draw=maincolor!70,
+          opacity=0.75, domain=-0.7:0.7, y domain=-0.7:0.7, samples=2] {1};
+
+% Plano tangente en mínimo (0,pi,-1) — azul
+\addplot3[surf, shader=flat, fill=blue!35, draw=blue!70,
+          opacity=0.75, domain=-0.7:0.7, y domain=2.44:3.84, samples=2] {-1};
+
+% Plano tangente en silla (pi/2,-pi/2,0)
+\addplot3[surf, shader=flat, fill=orange!35, draw=orange!70,
+          opacity=0.75, domain=0.87:2.27, y domain=-2.27:-0.87, samples=2] {0};
+
+% Puntos críticos
+\addplot3[only marks, mark=*, mark size=1.5pt, maincolor]
+  coordinates {(0,0,1)};
+\addplot3[only marks, mark=*, mark size=1.5pt, blue!80!black]
+  coordinates {(0,3.14159,-1)};
+\addplot3[only marks, mark=*, mark size=1.5pt, orange!80!black]
+  coordinates {(1.5708,-1.5708,0)};
+
+% Etiquetas
+\node[font=\tiny, maincolor]     at (axis cs:-1.2, -1.2, 1.3)   {máximo};
+\node[font=\tiny, blue!80!black]   at (axis cs:-3.0, 2.5, -1.4) {mínimo};
+\node[font=\tiny, orange!80!black] at (axis cs:2.5, -3.0, 0.4)  {silla};
+\end{axis}
+\end{tikzpicture}
+
+{\small Puntos críticos de $f(x,y) = \cos(x)\cos(y)$.}
+:::
+
+:::
+
+::: {.column width="54%"}
+
+\vspace{0.5cm}
+
+\cemph{Condiciones de primer orden} (Condición necesaria)
+
+$$\nabla f\!\left(x_1^*, x_2^*, \ldots, x_n^*\right) = \vec{0}$$
+
+\begin{center}
+\tikz{\node[draw=maincolor, rounded corners=4pt, inner sep=8pt, fill=maincolor!5]{%
+{\small$\begin{aligned}
+\dfrac{\partial f}{\partial x_1}(x_1^*, \ldots, x_n^*) &= 0 \\[6pt]
+\dfrac{\partial f}{\partial x_2}(x_1^*, \ldots, x_n^*) &= 0 \\[4pt]
+&\;\vdots \\[4pt]
+\dfrac{\partial f}{\partial x_n}(x_1^*, \ldots, x_n^*) &= 0
+\end{aligned}$}%
+};}
+\end{center}
+
+:::
+
+::::
+
+## Optimización sin restricciones
+
+<!-- Referencia: pdf2jpg/Tema3_Página_07.jpg -->
+
+\cemph{Condiciones de segundo orden} (Condiciones suficientes)
+
+- Si $H_f\!\left(x_1^*,\ldots,x_n^*\right)$ es \ctextbf{definida negativa}, $f$ tiene un \ctextbf{máximo relativo} en $\left(x_1^*,x_2^*,\ldots,x_n^*\right)$
+
+- Si $H_f\!\left(x_1^*,\ldots,x_n^*\right)$ es \ctextbf{definida positiva}, $f$ tiene un \ctextbf{mínimo relativo} en $\left(x_1^*,x_2^*,\ldots,x_n^*\right)$
+
+- Si $H_f\!\left(x_1^*,\ldots,x_n^*\right)$ es \ctextbf{indefinida}, $f$ tiene un \ctextbf{punto de silla} en $\left(x_1^*,x_2^*,\ldots,x_n^*\right)$
+
+- Si $H_f\!\left(x_1^*,\ldots,x_n^*\right)$ es \ctextbf{semidefinida}, entonces no tenemos información suficiente para clasificar
+
+## Clasificación de matrices simétricas: criterio de valores propios
+
+Sea $A$ una matriz simétrica $n\times n$ con valores propios $\lambda_1, \lambda_2, \ldots, \lambda_n \in \mathbb{R}$. Entonces:
+
+\vspace{0.3cm}
+
+| Clasificación | Condición |
+|---|---|
+| \ctextbf{Definida positiva} | $\lambda_i > 0 \quad \forall i$ |
+| \ctextbf{Definida negativa} | $\lambda_i < 0 \quad \forall i$ |
+| \ctextbf{Semidefinida positiva} | $\lambda_i \geq 0 \quad \forall i$, alguno $= 0$ |
+| \ctextbf{Semidefinida negativa} | $\lambda_i \leq 0 \quad \forall i$, alguno $= 0$ |
+| \ctextbf{Indefinida} | $\exists\, \lambda_i > 0$ y $\exists\, \lambda_j < 0$ |
+
+\vspace{0.3cm}
+
+> Los valores propios de una matriz simétrica son siempre reales.
+
+## Clasificación de matrices simétricas: criterio de los menores principales {.shrink}
+
+Sea $A$ una matriz simétrica $n\times n$. Los \ctextbf{menores principales} son los determinantes de las submatrices cuadradas superiores izquierdas:
+$$A_k = \det(A_k), \quad k = 1, \ldots, n$$
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+\cemph{Clasificación} & \cemph{Condición general} & \cemph{Ejemplo $n=3$} \\
+\midrule
+\ctextbf{Def. positiva}    & $A_k > 0\ \forall k$                              & $A_1>0,\ A_2>0,\ A_3>0$ \\[3pt]
+\ctextbf{Def. negativa}    & $(-1)^k A_k > 0\ \forall k$                       & $A_1<0,\ A_2>0,\ A_3<0$ \\[3pt]
+\ctextbf{Semidef. positiva}& $A_k > 0\ \forall k\!<\!n,\ A_n=0$               & $A_1>0,\ A_2>0,\ A_3=0$ \\[3pt]
+\ctextbf{Semidef. negativa}& $(-1)^k A_k > 0\ \forall k\!<\!n,\ A_n=0$        & $A_1<0,\ A_2>0,\ A_3=0$ \\[3pt]
+\ctextbf{Indefinida}       & $A_n \neq 0$ y ningún caso anterior               & ---                      \\[3pt]
+\rowcolor{red!15}
+\ctextbf{Caso dudoso}      & $A_n=0\ \exists\, j<n$ tal que $A_j=0$           & ---                      \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+# Optimización con restricciones de igualdad {#sec-con-restricciones}
+
+## Optimización con restricciones de igualdad
+
+<!-- Referencia: pdf2jpg/Tema3_Página_08.jpg -->
+
+::: {.block}
+$$
+\begin{aligned}
+  &\text{Opt.}\; f(x_1,\ldots,x_n) \\[4pt]
+  &\text{s.a.}\quad g_1(x_1,\ldots,x_n) = b_1 \\
+  &\qquad\quad\vdots \\
+  &\qquad\quad g_m(x_1,\ldots,x_n) = b_m
+\end{aligned}
+$$
+:::
+
+## {.plain}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+::: {#fig-ejemplo1-3d}
+\begin{tikzpicture}
+\begin{axis}[
+  view={-37.5}{30},
+  width=7.2cm, height=6.2cm,
+  xlabel={\small$x$}, ylabel={\small$y$}, zlabel={},
+  xtick={-1,0,1}, ytick={-1,0,1}, ztick={-1,0,1},
+  xticklabel style={font=\scriptsize}, yticklabel style={font=\scriptsize},
+  zticklabel style={font=\scriptsize},
+  domain=-1.5:1.5, y domain=-1.5:1.5,
+  samples=30,
+  colormap={myjet}{
+    rgb255=(0,0,144)
+    rgb255=(0,0,255)
+    rgb255=(0,128,255)
+    rgb255=(0,255,255)
+    rgb255=(128,255,128)
+    rgb255=(255,255,0)
+    rgb255=(255,128,0)
+    rgb255=(255,0,0)
+    rgb255=(128,0,0)},
+]
+\addplot3[surf, shader=flat corner, draw=black!12, line width=0.1pt,
+          opacity=0.75]
+  {x+y};
+\addplot3[very thick, black, domain=0:360, samples=100, samples y=0]
+  ({cos(x)}, {sin(x)}, {cos(x)+sin(x)});
+\addplot3[only marks, mark=*, mark size=2.5pt, red!80!black]
+  coordinates {(0.707, 0.707, 1.414) (-0.707,-0.707,-1.414)};
+\node[font=\scriptsize, fill=white, fill opacity=0.85, text opacity=1, inner sep=1pt,
+      anchor=south west] at (axis cs:0.707,0.707,1.5)
+  {$\left(\tfrac{\sqrt{2}}{2},\tfrac{\sqrt{2}}{2}\right)$};
+\node[font=\scriptsize, fill=white, fill opacity=0.85, text opacity=1, inner sep=1pt,
+      anchor=north east] at (axis cs:-0.707,-0.707,-1.5)
+  {$\left(\!-\tfrac{\sqrt{2}}{2},-\tfrac{\sqrt{2}}{2}\right)$};
+\end{axis}
+\end{tikzpicture}
+
+Óptimos condicionados de $f(x,y)=x+y$ sujeto a $x^2+y^2=1$.
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {#fig-ejemplo2-3d}
+\begin{tikzpicture}
+\begin{axis}[
+  view={-37.5}{30},
+  width=7.2cm, height=6.2cm,
+  xlabel={\small$x$}, ylabel={\small$y$}, zlabel={},
+  xtick={-1,0,1}, ytick={-1,0,1}, ztick={-4,-2,0,2,4},
+  xticklabel style={font=\scriptsize}, yticklabel style={font=\scriptsize},
+  zticklabel style={font=\scriptsize},
+  domain=-2:2, y domain=-2:2,
+  samples=30,
+  colormap={myjet}{
+    rgb255=(0,0,144)
+    rgb255=(0,0,255)
+    rgb255=(0,128,255)
+    rgb255=(0,255,255)
+    rgb255=(128,255,128)
+    rgb255=(255,255,0)
+    rgb255=(255,128,0)
+    rgb255=(255,0,0)
+    rgb255=(128,0,0)},
+]
+\addplot3[surf, shader=flat corner, draw=black!12, line width=0.1pt,
+          opacity=0.75]
+  {x^2*y};
+\addplot3[very thick, black, domain=0:360, samples=100, samples y=0]
+  ({1.7321*cos(x)}, {1.7321*sin(x)}, {3*cos(x)^2*1.7321*sin(x)});
+\addplot3[only marks, mark=*, mark size=2.5pt, red!80!black]
+  coordinates {(1.4142,1,2) (-1.4142,1,2) (1.4142,-1,-2) (-1.4142,-1,-2)};
+\node[font=\scriptsize, fill=white, fill opacity=0.85, text opacity=1, inner sep=1pt,
+      anchor=south] at (axis cs:1.4142,1,2.3)
+  {$(\sqrt{2},1)$};
+\node[font=\scriptsize, fill=white, fill opacity=0.85, text opacity=1, inner sep=1pt,
+      anchor=north] at (axis cs:-1.4142,-1,-2.3)
+  {$(-\sqrt{2},-1)$};
+\end{axis}
+\end{tikzpicture}
+
+Óptimos condicionados de $f(x,y)=x^2y$ sujeto a $x^2+y^2=3$.
+:::
+
+:::
+
+::::
+
+## Optimización con restricciones de igualdad
+
+<!-- Referencia: pdf2jpg/Tema3_Página_09.jpg -->
+
+:::: {.columns}
+
+::: {.column width="46%"}
+
+::: {#fig-curvas-nivel-restriccion}
+\begin{tikzpicture}
+\begin{axis}[
+  axis equal image,
+  width=6.5cm, height=6.5cm,
+  xmin=-1.8, xmax=1.8,
+  ymin=-1.8, ymax=1.8,
+  xlabel={}, ylabel={},
+  tick style={draw=none},
+  xticklabels={$-1.5$,$-1$,$-0.5$,$0$,$0.5$,$1$,$1.5$},
+  yticklabels={$-1.5$,$-1$,$-0.5$,$0$,$0.5$,$1$,$1.5$},
+  xtick={-1.5,-1,-0.5,0,0.5,1,1.5},
+  ytick={-1.5,-1,-0.5,0,0.5,1,1.5},
+  tick label style={font=\tiny},
+  axis lines=center,
+]
+% Curvas de nivel de f(x,y)=x+y: y = c - x (paleta jet: azul→rojo)
+\addplot[color={rgb,255:red,0;green,0;blue,144}, very thick, domain=-1.8:1.8, samples=2] {-1.4142-x};
+\addplot[color={rgb,255:red,0;green,128;blue,255}, thick, domain=-1.8:1.8, samples=2] {-1.0-x};
+\addplot[color={rgb,255:red,0;green,255;blue,255}, thick, domain=-1.8:1.8, samples=2] {-0.5-x};
+\addplot[color={rgb,255:red,128;green,255;blue,128}, thick, domain=-1.8:1.8, samples=2] { 0.0-x};
+\addplot[color={rgb,255:red,255;green,255;blue,0}, thick, domain=-1.8:1.8, samples=2] { 0.5-x};
+\addplot[color={rgb,255:red,255;green,128;blue,0}, thick, domain=-1.8:1.8, samples=2] { 1.0-x};
+\addplot[color={rgb,255:red,255;green,0;blue,0}, very thick, domain=-1.8:1.8, samples=2] { 1.4142-x};
+% Círculo restricción x^2+y^2=1
+\addplot[very thick, black, domain=0:360, samples=120]
+  ({cos(x)},{sin(x)});
+% Puntos críticos
+\addplot[only marks, mark=*, mark size=3pt, color={rgb,255:red,255;green,0;blue,0}]
+  coordinates {(0.7071, 0.7071)};
+\addplot[only marks, mark=*, mark size=3pt, color={rgb,255:red,0;green,0;blue,144}]
+  coordinates {(-0.7071, -0.7071)};
+\end{axis}
+\end{tikzpicture}
+:::
+
+:::
+
+::: {.column width="54%"}
+
+\vspace{0.3cm}
+
+- Se representará la \cemph{restricción}
+- Se superpondrán algunas \cemph{curvas de nivel} de la función objetivo
+- El \cemph{punto de contacto} entre la última curva de nivel, en el sentido del vector gradiente, y la curva, será la \ctextbf{solución máxima}
+- El \cemph{punto de contacto} en sentido contrario será la \ctextbf{solución mínima}
+
+:::
+
+::::
+
+## Optimización con restricciones de igualdad
+
+:::: {.columns}
+
+::: {.column width="46%"}
+
+::: {#fig-curvas-nivel-formulas}
+\begin{tikzpicture}
+\begin{axis}[
+  axis equal image,
+  width=6.5cm, height=6.5cm,
+  xmin=-1.8, xmax=1.8,
+  ymin=-1.8, ymax=1.8,
+  xlabel={}, ylabel={},
+  tick style={draw=none},
+  xticklabels={$-1.5$,$-1$,$-0.5$,$0$,$0.5$,$1$,$1.5$},
+  yticklabels={$-1.5$,$-1$,$-0.5$,$0$,$0.5$,$1$,$1.5$},
+  xtick={-1.5,-1,-0.5,0,0.5,1,1.5},
+  ytick={-1.5,-1,-0.5,0,0.5,1,1.5},
+  tick label style={font=\tiny},
+  axis lines=center,
+]
+% Curvas de nivel de f(x,y)=x+y: y = c - x (paleta jet: azul→rojo)
+\addplot[color={rgb,255:red,0;green,0;blue,144}, very thick, domain=-1.8:1.8, samples=2] {-1.4142-x};
+\addplot[color={rgb,255:red,0;green,128;blue,255}, thick, domain=-1.8:1.8, samples=2] {-1.0-x};
+\addplot[color={rgb,255:red,0;green,255;blue,255}, thick, domain=-1.8:1.8, samples=2] {-0.5-x};
+\addplot[color={rgb,255:red,128;green,255;blue,128}, thick, domain=-1.8:1.8, samples=2] { 0.0-x};
+\addplot[color={rgb,255:red,255;green,255;blue,0}, thick, domain=-1.8:1.8, samples=2] { 0.5-x};
+\addplot[color={rgb,255:red,255;green,128;blue,0}, thick, domain=-1.8:1.8, samples=2] { 1.0-x};
+\addplot[color={rgb,255:red,255;green,0;blue,0}, very thick, domain=-1.8:1.8, samples=2] { 1.4142-x};
+% Círculo restricción x^2+y^2=1
+\addplot[very thick, black, domain=0:360, samples=120]
+  ({cos(x)},{sin(x)});
+% Puntos críticos
+\addplot[only marks, mark=*, mark size=3pt, color={rgb,255:red,255;green,0;blue,0}]
+  coordinates {(0.7071, 0.7071)};
+\addplot[only marks, mark=*, mark size=3pt, color={rgb,255:red,0;green,0;blue,144}]
+  coordinates {(-0.7071, -0.7071)};
+\end{axis}
+\end{tikzpicture}
+:::
+
+:::
+
+::: {.column width="54%"}
+
+\vspace{0.3cm}
+
+$$\frac{\partial f}{\partial x} + \frac{\partial f}{\partial y}\frac{dy}{dx} = 0 \;\Rightarrow\; \frac{dy}{dx} = -\frac{\partial f/\partial x}{\partial f/\partial y}$$
+
+$$\frac{\partial g}{\partial x} + \frac{\partial g}{\partial y}\frac{dy}{dx} = 0 \;\Rightarrow\; \frac{dy}{dx} = -\frac{\partial g/\partial x}{\partial g/\partial y}$$
+
+::: {.block}
+$$\frac{\partial f/\partial x}{\partial f/\partial y} = \frac{\partial g/\partial x}{\partial g/\partial y}$$
+:::
+
+:::
+
+::::
+
+## Optimización con restricciones de igualdad
+
+<!-- Referencia: pdf2jpg/Tema3_Página_10.jpg -->
+
+\cemph{Condiciones de primer orden}
+
+- \cemph{Problema 2 variables, 1 restricción}:
+$$L(x,y,\lambda) = f(x,y) - \lambda\bigl(g(x,y) - b\bigr)$$
+
+- \cemph{Problema 3 variables, 1 restricción}:
+$$L(x,y,z,\lambda) = f(x,y,z) - \lambda\bigl(g(x,y,z) - b\bigr)$$
+
+- \cemph{Problema 3 variables, 2 restricciones}:
+$$L(x,y,z,\lambda) = f(x,y,z) - \lambda_1\bigl(g_1(x,y,z)-b_1\bigr) - \lambda_2\bigl(g_2(x,y,z)-b_2\bigr)$$
+
+\vspace{0.5cm}
+
+::: {.block}
+$$\nabla L\bigl(x_1,\ldots,x_n,\lambda_1,\ldots,\lambda_m\bigr) = (0,\ldots,0)$$
+:::
+
+## Optimización con restricciones de igualdad {.shrink}
+
+<!-- Referencia: pdf2jpg/Tema3_Página_11.jpg -->
+
+\cemph{Condiciones de segundo orden}
+
+- \cemph{Matriz hessiana de $L$} con respecto a las variables de decisión:
+
+$$HL\!\left(x_1,\ldots,x_n;\lambda_1,\ldots,\lambda_m\right) =
+\begin{bmatrix}
+\dfrac{\partial^2 L}{\partial x_1^2}\!(x_1,\ldots) & \cdots &
+\dfrac{\partial^2 L}{\partial x_1\partial x_n}\!(x_1,\ldots) \\[8pt]
+\vdots & \ddots & \vdots \\[4pt]
+\dfrac{\partial^2 L}{\partial x_n\partial x_1}\!(x_1,\ldots) & \cdots &
+\dfrac{\partial^2 L}{\partial x_n^2}\!(x_1,\ldots)
+\end{bmatrix}$$
+
+- \cemph{Matriz Jacobiana}:
+
+$$J_g\!\left(x_1,\ldots,x_n\right) =
+\begin{bmatrix}
+\dfrac{\partial g_1}{\partial x_1}(x_1,\ldots,x_n) & \cdots &
+\dfrac{\partial g_1}{\partial x_n}(x_1,\ldots,x_n) \\[8pt]
+\vdots & \ddots & \vdots \\[4pt]
+\dfrac{\partial g_m}{\partial x_1}(x_1,\ldots,x_n) & \cdots &
+\dfrac{\partial g_m}{\partial x_n}(x_1,\ldots,x_n)
+\end{bmatrix}$$
+
+## Optimización con restricciones de igualdad {.shrink}
+
+<!-- Referencia: pdf2jpg/Tema3_Página_12.jpg -->
+
+1. Calcular $HL_{\tilde{x}}\!\left(x_1,\ldots,x_n;\lambda_1,\ldots,\lambda_m\right)$ y evaluarla en el punto crítico restringido $(x_1^*,\ldots,x_n^*;\lambda_1^*,\ldots,\lambda_m^*)$
+
+2. Calcular $J_g\!\left(x_1,\ldots,x_n\right)$ y evaluarla en $(x_1^*,\ldots,x_n^*)$
+
+3. Obtener las \ctextbf{direcciones factibles} $\vec{v}^*$ resolviendo el sistema homogéneo $J_g\!\left(x_1^*,\ldots,x_n^*\right)\vec{v} = \vec{0}$
+
+4. Construir la \ctextbf{forma cuadrática restringida}: $\bigl(\vec{v}^*\bigr)^{t}\, HL_{\tilde{x}}\!\left(x_1^*,\ldots,x_n^*;\lambda_1^*,\ldots,\lambda_m^*\right)\vec{v}^*$
+
+5. \cemph{Clasificar} la matriz asociada a la forma cuadrática restringida para determinar la naturaleza del punto crítico restringido
+
+## Recordatorio: de forma cuadrática a matriz {.shrink}
+
+Dada una forma cuadrática en $n$ variables:
+$$Q(\vec{v}) = \vec{v}^{\,t} A\, \vec{v} = \sum_{i=1}^{n}\sum_{j=1}^{n} a_{ij}\, v_i\, v_j$$
+
+La \ctextbf{matriz asociada} $A$ se construye como:
+
+- Los elementos de la \cemph{diagonal} $a_{ii}$ son los coeficientes de $v_i^2$
+- Los elementos \cemph{fuera de la diagonal} $a_{ij} = a_{ji}$ son la \cemph{mitad} del coeficiente de $v_i v_j$
+
+\vspace{0.3cm}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+**Ejemplo con 2 variables:**
+
+$$Q(v_1,v_2) = 3v_1^2 - 4v_1 v_2 + v_2^2$$
+
+$$A = \begin{pmatrix} 3 & -2 \\ -2 & 1 \end{pmatrix}$$
+
+:::
+
+::: {.column width="50%"}
+
+**Ejemplo con 3 variables:**
+
+$$Q(v_1,v_2,v_3) = 2v_1^2 + v_2^2 - v_3^2 + 6v_1 v_2 - 4v_1 v_3$$
+
+$$A = \begin{pmatrix} 2 & 3 & -2 \\ 3 & 1 & 0 \\ -2 & 0 & -1 \end{pmatrix}$$
+
+:::
+
+::::
+
+\vspace{0.2cm}
+
+> La matriz $A$ es siempre **simétrica** por construcción.
+
+# Resultados fundamentales {#sec-resultados}
+
+## Interpretación de los multiplicadores de Lagrange
+
+- El multiplicador de Lagrange nos informa de cómo varía el valor de la función objetivo en un entorno del punto óptimo *frente a cambios infinitesimales del término* independiente.
+
+\vspace{1cm}
+
+::: {.block}
+$$df^*\!\left(b\right) = \lambda^*\, db$$
+
+$$\Delta f^* \approx \lambda^*\, \Delta b$$
+:::
+
+## {.plain}
+
+\FinalPageContent

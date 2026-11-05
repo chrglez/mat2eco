@@ -1,0 +1,13 @@
+% Custom final page for Tema 3 (subtitle too long for \LARGE, color #007051)
+\renewcommand{\FinalPageContent}{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[maincolor] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+    \centering
+    \vspace{2.5cm}
+    {\color{white}\large\bfseries Tema 3: Introducción a la optimización de varias variables}
+
+    \vspace{2cm}
+
+    {\color{white}\Large \faCreativeCommons\ \faCreativeCommonsBy\ \faCreativeCommonsSa}
+}
