@@ -54,7 +54,7 @@ format:
     code-fold: true
     code-summary: "Ver el código"
     lang: es
-    math: mathjax
+    html-math-method: mathjax
 
 execute:
   echo: true

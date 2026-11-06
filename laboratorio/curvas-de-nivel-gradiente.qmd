@@ -26,7 +26,11 @@ volver a ejecutar: todo lo demás se recalcula.
 import numpy as np
 import sympy as sp
 import plotly.graph_objects as go
-from IPython.display import Math, display
+from IPython.display import HTML, Math, display
+
+def mostrar_figura(fig):
+    """Muestra una figura de Plotly sin que cargue su propia MathJax (chocaría con la del libro)."""
+    display(HTML(fig.to_html(include_plotlyjs="cdn", include_mathjax=False, full_html=False)))
 
 def mostrar(lhs, rhs):
     """Escribe 'lhs = rhs' en LaTeX (rhs puede ser una expresión o matriz de SymPy)."""
@@ -108,7 +112,7 @@ fig.update_layout(
                                                    frame=dict(duration=0, redraw=True))])
                          for i, t in enumerate(thetas)])],
 )
-fig
+mostrar_figura(fig)
 ```
 
 ## La superficie
@@ -123,7 +127,7 @@ surf = go.Figure(go.Surface(
     showscale=False))
 surf.update_layout(height=520, margin=dict(l=0, r=0, t=0, b=0),
                    scene=dict(xaxis_title="x", yaxis_title="y", zaxis_title="f"))
-surf
+mostrar_figura(surf)
 ```
 
 ## Comprobación simbólica
